@@ -16,7 +16,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	 * Array with label translations
 	 * @var array | NULL
 	 */
-	protected $translateArray = NULL;
+	protected $translationArray = NULL;
 
 	/**
 	 * Override this method to add new label translation
@@ -28,6 +28,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	}
 
 	public function __construct() {
+		parent::__construct();
 		$this->loadTranslation();
 	}
 
