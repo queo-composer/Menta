@@ -28,6 +28,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	}
 
 	public function __construct() {
+		parent::__construct();
 		$this->loadTranslation();
 	}
 
