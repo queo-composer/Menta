@@ -113,6 +113,16 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	}
 
 	/**
+	 * Checks if checkbox, option or radiobutton is selected
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @return boolean
+	 */
+	public function isSelected($element) {
+		return $this->getElement($element)->selected();
+	}
+
+	/**
 	 * Get title
 	 *
 	 * @return string
