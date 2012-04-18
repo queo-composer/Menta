@@ -41,7 +41,7 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 */
 	public function __construct($name = NULL, array $data = array(), $dataName = '') {
 		parent::__construct($name, $data, $dataName);
-		$this->testId = md5(uniqid(rand(), TRUE));
+		$this->testId = str_replace('.', '_',uniqid(mt_rand(), TRUE));
 
 		if ($this->getConfiguration()->issetKey('testing.selenium.captureScreenshotOnFailure')) {
 			$this->captureScreenshotOnFailure = (bool)$this->getConfiguration()->getValue('testing.selenium.captureScreenshotOnFailure');

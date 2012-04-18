@@ -76,7 +76,7 @@ abstract class Menta_PHPUnit_Testcase_Selenium1 extends Menta_PHPUnit_Testcase_S
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct($name = NULL, array $data = array(), $dataName = '', array $browser = array()) {
-		$this->testId = md5(uniqid(rand(), TRUE));
+		$this->testId = str_replace('.', '_',uniqid(mt_rand(), TRUE));
 		parent::__construct($name, $data, $dataName, $browser);
 	}
 
