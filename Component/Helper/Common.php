@@ -229,7 +229,11 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		}
 		$element->value(array('value' => array($text)));
 		if ($leaveFieldAfterwards) {
-			$element->value(array('value' => array(WebDriver_Keys::Tab)));
+			try {
+				$element->value(array('value' => array(WebDriver_Keys::Tab)));
+			} catch (WebDriver_Exception_StaleElementReference $e){
+				echo $e->getMessage();
+			}
 		}
 	}
 
