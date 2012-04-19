@@ -82,6 +82,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 
 		if (!$implictWait && $this->getConfiguration() && $this->getConfiguration()->issetKey('testing.selenium.timeoutImplicitWait')) {
 			$time = $this->getConfiguration()->getValue('testing.selenium.timeoutImplicitWait');
+			$time = intval($time);
 			$this->getSession()->timeouts()->implicit_wait(array('ms' => 0)); // deactivate implicit wait
 		}
 

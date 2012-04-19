@@ -21,7 +21,7 @@ try {
 	# Search
 	$input = $session->element(WebDriver_Container::ID, 'lst-ib');
 	$input->value(array('value' => array('AOE media')));
-	$input->value(array('value' => array(WebDriver_Keys::ReturnKey)));
+	$input->value(array('value' => array(WebDriver_Element::ReturnKey)));
 
 	sleep(2);
 

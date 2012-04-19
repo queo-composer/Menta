@@ -225,12 +225,12 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		$element = $this->getElement($element);
 		if ($resetContent) {
 			// got to the end, mark everything to the beginning to overwrite existing content
-			$element->value(array('value' => array(WebDriver_Keys::End . WebDriver_Keys::Shift . WebDriver_Keys::Home)));
+			$element->value(array('value' => array(WebDriver_Element::End . WebDriver_Element::Shift . WebDriver_Element::Home)));
 		}
 		$element->value(array('value' => array($text)));
 		if ($leaveFieldAfterwards) {
 			try {
-				$element->value(array('value' => array(WebDriver_Keys::Tab)));
+				$element->value(array('value' => array(WebDriver_Element::Tab)));
 			} catch (WebDriver_Exception_StaleElementReference $e){
 				echo $e->getMessage();
 			}

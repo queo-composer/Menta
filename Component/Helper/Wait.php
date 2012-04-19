@@ -11,12 +11,12 @@
 class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 
 	/**
-	 * @var int default timeout
+	 * @var float default timeout in seconds
 	 */
-	protected $defaultTimeout = 30;
+	protected $defaultTimeout = 30.0;
 
 	/**
-	 * @var int default sleep value;
+	 * @var int default sleep value in seconds
 	 */
 	protected $defaultSleep = 1;
 
@@ -48,7 +48,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 * @static
 	 * @param $callback
 	 * @param int $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool|mixed
 	 */
 	public function wait($callback, $timeout=null, $sleep=null) {
@@ -59,7 +59,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 			if ($result) {
 				return $result;
 			}
-			sleep($sleep);
+			usleep(intval($sleep*1000000));
 			$timeout -= $sleep;
 		} while($timeout > 0);
 		return false;
@@ -70,7 +70,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 *
 	 * @param string $locator
 	 * @param integer $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForElementPresent($locator, $timeout=null, $sleep=null) {
@@ -86,7 +86,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 *
 	 * @param string|array|WebDriver_Element $locator
 	 * @param int $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForElementNotPresent($locator, $timeout=null, $sleep=null) {
@@ -102,7 +102,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 *
 	 * @param string|array|WebDriver_Element $text
 	 * @param int $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForTextPresent($text, $timeout=null, $sleep=null) {
@@ -118,7 +118,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 *
 	 * @param string|array|WebDriver_Element $text
 	 * @param int $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForTextNotPresent($text, $timeout=null, $sleep=null) {
@@ -134,7 +134,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 *
 	 * @param string|array|WebDriver_Element $jsSnippet
 	 * @param int $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForCondition($jsSnippet, $timeout=NULL, $sleep=null) {
@@ -150,7 +150,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 *
 	 * @param string $locator
 	 * @param integer $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForElementVisible($locator, $timeout=null, $sleep=null) {
@@ -166,7 +166,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 *
 	 * @param string|array|WebDriver_Element $locator
 	 * @param int $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForElementNotVisible($locator, $timeout=null, $sleep=null) {
@@ -183,7 +183,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 * @deprecated
 	 * @param string $locator
 	 * @param integer $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForVisible($locator, $timeout=null, $sleep=null) {
@@ -196,7 +196,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	 * @deprecated
 	 * @param string|array|WebDriver_Element $locator
 	 * @param int $timeout
-	 * @param int $sleep
+	 * @param float $sleep in seconds
 	 * @return bool
 	 */
 	public function waitForNotVisible($locator, $timeout=null, $sleep=null) {
@@ -214,4 +214,3 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 	}
 
 }
-
