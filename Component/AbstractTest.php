@@ -47,7 +47,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	 * Set test object
 	 *
 	 * @param PHPUnit_Framework_TestCase $test
-	 * @return Menta_Component_Helper_Assert
+	 * @return Menta_Component_AbstractTest
 	 */
 	public function setTest(PHPUnit_Framework_TestCase $test) {
 		$this->test = $test;

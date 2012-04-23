@@ -35,3 +35,42 @@ spl_autoload_register(function ($className) {
 	return true;
 
 });
+
+// Provide configuration object to all components
+Menta_Events::addObserver('before_component_get', function(Menta_Component_Abstract $component) {
+
+
+	// set configuration to each component
+	$component->setConfiguration(Menta_ConfigurationPhpUnitVars::getInstance());
+
+	// pass current test to components inheriting from Menta_Component_AbstractTest
+	if ($component instanceof Menta_Component_AbstractTest
+		&& isset($GLOBALS['current_testcase'])
+		&& $GLOBALS['current_testcase'] instanceof PHPUnit_Framework_TestCase) {
+		/* @var $component Menta_Component_AbstractTest */
+		$component->setTest($GLOBALS['current_testcase']);
+	}
+});
+
+
+/**
+ * Close existing Selenium server sessions
+ *
+ * @return void
+ */
+function closeSeleniumSession() {
+	if (Menta_SessionManager::activeSessionExists()) {
+		echo "\n[Closing remote selenium session]\n";
+		Menta_SessionManager::closeSession();
+	}
+	exit;
+}
+
+if (function_exists('pcntl_signal')) {
+	declare(ticks = 1);
+	pcntl_signal(SIGTERM, 'closeSeleniumSession');
+	pcntl_signal(SIGINT, 'closeSeleniumSession');
+}
+register_shutdown_function('closeSeleniumSession'); // will also be called on "PHP Fatal Error"
+
+// WebDriver_Base::$debugFile = 'debug.txt';

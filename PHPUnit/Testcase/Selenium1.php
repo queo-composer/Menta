@@ -69,18 +69,6 @@ abstract class Menta_PHPUnit_Testcase_Selenium1 extends Menta_PHPUnit_Testcase_S
 	protected $selenium1Facade;
 
 	/**
-	 * @param  string $name
-	 * @param  array  $data
-	 * @param  string $dataName
-	 * @param  array  $browser
-	 * @throws InvalidArgumentException
-	 */
-	public function __construct($name = NULL, array $data = array(), $dataName = '', array $browser = array()) {
-		$this->testId = str_replace('.', '_',uniqid(mt_rand(), TRUE));
-		parent::__construct($name, $data, $dataName, $browser);
-	}
-
-	/**
 	 * Get test id
 	 *
 	 * @return string
