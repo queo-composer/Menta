@@ -47,13 +47,17 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	 *
 	 * @throws Exception
 	 * @param $element
+	 * @param $parent
 	 * @return WebDriver_Element
 	 */
-	public function getElement($element) {
+	public function getElement($element, $parent=NULL) {
 		if ($element instanceof WebDriver_Element) {
 			// already the correct element => do nothing
 		} else {
-			$element = $this->getSession()->element($this->parseLocator($element));
+			if (is_null($parent)) {
+				$parent = $this->getSession();
+			}
+			$element = $parent->element($this->parseLocator($element));
 		}
 		if (!$element instanceof WebDriver_Element) {
 			throw new Exception("Element '$element' not found");
