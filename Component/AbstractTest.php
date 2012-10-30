@@ -61,7 +61,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	 */
 	public function getTest() {
 		if (is_null($this->test)) {
-			throw new Exception('No testcase object available');
+			throw new Exception('No testcase object available, check if you are calling parent::setUp() in your test class.');
 		}
 		return $this->test;
 	}
