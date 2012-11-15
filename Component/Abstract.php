@@ -8,11 +8,6 @@
 abstract class Menta_Component_Abstract implements Menta_Interface_Component {
 
 	/**
-	 * @var WebDriver_Session
-	 */
-	protected $session;
-
-	/**
 	 * @var Menta_Interface_Configuration
 	 */
 	protected $configuration;
@@ -26,26 +21,12 @@ abstract class Menta_Component_Abstract implements Menta_Interface_Component {
 	}
 
 	/**
-	 * Set session
-	 *
-	 * @param WebDriver_Session $session
-	 * @return Menta_Component_Abstract
-	 */
-	public function setSession(WebDriver_Session $session) {
-		$this->session = $session;
-		return $this;
-	}
-
-	/**
 	 * Get session
 	 *
 	 * @return WebDriver_Session
 	 */
 	public function getSession() {
-		if (!$this->session instanceof WebDriver_Session) {
-			$this->session = Menta_SessionManager::getSession();
-		}
-		return $this->session;
+		return Menta_SessionManager::getSession();
 	}
 
 	/**
