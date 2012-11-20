@@ -3,12 +3,13 @@
     "type": "library",
     "description": "Selenium 2 Testing Framework (for PHPUnit)",
     "keywords": ["selenium", "webdriver", "phpunit", "browser"],
-    "homepage": "http://www.aoemedia.com",
+    "homepage": "https://github.com/AOEmedia/Menta",
     "license": "Apache",
     "authors": [
         {
             "name": "Fabrizio Branca",
             "email": "menta@fabrizio-branca.de",
+            "homepage": "http://www.fabrizio-branca.de",
             "role": "Developer"
         }
     ],
