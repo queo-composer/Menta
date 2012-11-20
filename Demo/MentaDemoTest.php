@@ -14,9 +14,9 @@ class MentaDemoTest extends PHPUnit_Framework_TestCase {
 	public function testDemo() {
 		$session = Menta_SessionManager::getSession();
 		$session->open('http://www.google.com/ncr');
-		$input = $session->element(WebDriver_Container::ID, 'lst-ib');
+		$input = $session->element(\WebDriver\Container::ID, 'lst-ib');
 		$input->value(array('value' => array('Fabrizio Branca')));
-		$input->value(array('value' => array(WebDriver_Element::ReturnKey)));
+		$input->value(array('value' => array(\WebDriver\Element::ReturnKey)));
 		Menta_SessionManager::closeSession();
 	}
 

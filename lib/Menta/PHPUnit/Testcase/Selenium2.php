@@ -89,12 +89,12 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 * Get webdriver session
 	 *
 	 * @param bool $forceNew
-	 * @return WebDriver_Session
+	 * @return \WebDriver\Session
 	 */
 	public function getSession($forceNew=false) {
 		try {
 			return Menta_SessionManager::getSession($forceNew);
-		} catch (WebDriver_Exception_CurlExec $e) {
+		} catch (\WebDriver\Exception $e) {
 			$this->markTestSkipped($e->getMessage()); // couldn't connect to host
 		}
 	}

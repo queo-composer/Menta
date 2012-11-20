@@ -59,7 +59,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element present
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $message
 	 * @return void
 	 */
@@ -73,7 +73,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element not present
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $message
 	 * @param bool $implictWait
 	 * @return void
@@ -109,7 +109,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element containts text
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @param string $message
 	 * @return void
@@ -124,7 +124,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element containts text
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @param string $message
 	 * @return void

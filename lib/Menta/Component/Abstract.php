@@ -23,7 +23,7 @@ abstract class Menta_Component_Abstract implements Menta_Interface_Component {
 	/**
 	 * Get session
 	 *
-	 * @return WebDriver_Session
+	 * @return \WebDriver\Session
 	 */
 	public function getSession() {
 		return Menta_SessionManager::getSession();

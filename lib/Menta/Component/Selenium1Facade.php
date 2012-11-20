@@ -40,7 +40,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Check if element is present
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return bool
 	 */
 	public function isElementPresent($element) {
@@ -60,7 +60,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Wait for element present
 	 *
-	 * @param string|array|WebDriver_Element $locator
+	 * @param string|array|\WebDriver\Element $locator
 	 * @param int $timeout
 	 * @param string $message
 	 * @return void
@@ -80,7 +80,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Wait for element not present
 	 *
-	 * @param string|array|WebDriver_Element $locator
+	 * @param string|array|\WebDriver\Element $locator
 	 * @param int $timeout
 	 * @param string $message
 	 * @return void
@@ -184,8 +184,8 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Auto-detect element
 	 *
-	 * @param string|array|WebDriver_Element $element
-	 * @return WebDriver_Element
+	 * @param string|array|\WebDriver\Element $element
+	 * @return \WebDriver\Element
 	 */
 	public function getElement($element) {
 		return $this->getHelperCommon()->getElement($element);
@@ -203,7 +203,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Get text
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return string
 	 */
 	public function getText($element) {
@@ -228,7 +228,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * Open an url prefixed with the previously configured browserUrl
 	 *
 	 * @param string $url
-	 * @return WebDriver_Base
+	 * @return
 	 */
 	public function open($url) {
 		if (!preg_match('/^https?:/i', $url)) {
@@ -264,7 +264,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Click on an element
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return void
 	 */
 	public function click($element) {
@@ -274,7 +274,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Type something
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param $text
 	 * @return void
 	 */
@@ -286,7 +286,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * Type text into an input field
 	 * Reset first and click outside afterwards
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @return void
 	 */
@@ -301,7 +301,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * - "label=<label>"
 	 *
 	 * @throws Exception
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $option
 	 * @return void
 	 */
@@ -317,7 +317,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Get value
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return string
 	 */
 	public function getValue($element) {
@@ -328,7 +328,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Check if element is visible
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return bool
 	 */
 	public function isVisible($element) {
@@ -338,7 +338,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Get selected label
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return bool|string
 	 */
 	public function getSelectedLabel($element) {
@@ -349,7 +349,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Get selected value
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return bool|string
 	 */
 	public function getSelectedValue($element) {
@@ -359,7 +359,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Get first selected option
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return bool|Webdriver_Element
 	 */
 	public function getFirstSelectedOption($element) {
@@ -420,7 +420,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element containts text
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @param string $message
 	 * @return void
