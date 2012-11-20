@@ -13,6 +13,12 @@
  */
 
 abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCase implements Menta_Interface_ScreenshotTestcase {
+
+	/**
+	 * @var string
+	 */
+	protected $testId;
+
 	/**
 	 * @var bool
 	 */
@@ -173,6 +179,15 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 */
 	public function getScreenshots() {
 		return $this->screenshots;
+	}
+
+	/**
+	 * Get test id
+	 *
+	 * @return string
+	 */
+	public function getTestId() {
+		return $this->testId;
 	}
 
 

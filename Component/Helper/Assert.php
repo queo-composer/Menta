@@ -122,6 +122,21 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	}
 
 	/**
+	 * Assert element containts text
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @param string $text
+	 * @param string $message
+	 * @return void
+	 */
+	public function assertElementEqualsToText($element, $text, $message='') {
+		if ($message == '') {
+			$message = sprintf('Element "%s" does not equal to text "%s"', $this->getHelperCommon()->element2String($element), $text);
+		}
+		$this->getTest()->assertEquals($text, $this->getHelperCommon()->getText($element), $message);
+	}
+
+	/**
 	 * Get common helper
 	 *
 	 * @return Menta_Component_Helper_Common
@@ -130,6 +145,18 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 		return Menta_ComponentManager::get('Menta_Component_Helper_Common');
 	}
 
+	/**
+	 * Checks if body tag contains class
+	 *
+	 * @author Fabrizio Branca
+	 * @since 2012-11-16
+	 * @param string $class
+	 * @return void
+	 */
+	public function assertBodyClass($class) {
+		$xpath = '//body['.Menta_Util_Div::contains($class).']';
+		$this->assertElementPresent($xpath);
+	}
 
 }
 

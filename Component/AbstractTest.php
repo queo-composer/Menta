@@ -58,6 +58,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	 * Get test object
 	 *
 	 * @return PHPUnit_Framework_TestCase
+	 * @throws Exception if testcase is not available
 	 */
 	public function getTest() {
 		if (is_null($this->test)) {

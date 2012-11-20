@@ -10,7 +10,6 @@
  * Update this index using:
  * cat Menta/Component/Selenium1Facade.php | grep 'public function' | sed 's/^.*public function / * @method /' | sed 's/\w*{.*\?//'
  *
- * @method setBrowserUrl($baseUrl)
  * @method assertTitle($title)
  * @method isElementPresent($element)
  * @method isTextPresent($text)
@@ -59,23 +58,9 @@ abstract class Menta_PHPUnit_Testcase_Selenium1 extends Menta_PHPUnit_Testcase_S
 	protected $captureScreenshotOnFailure = false;
 
 	/**
-	 * @var string
-	 */
-	protected $testId;
-
-	/**
 	 * @var Menta_Component_Selenium1Facade
 	 */
 	protected $selenium1Facade;
-
-	/**
-	 * Get test id
-	 *
-	 * @return string
-	 */
-	public function getTestId() {
-		return $this->testId;
-	}
 
 	/**
 	 * @return Menta_ConfigurationPhpUnitVars
@@ -112,6 +97,7 @@ abstract class Menta_PHPUnit_Testcase_Selenium1 extends Menta_PHPUnit_Testcase_S
 	 *
 	 * @param  string $command
 	 * @param  array  $arguments
+	 * @throws Exception if command is not implemented in api wrapper class
 	 * @return mixed
 	 */
 	public function __call($command, $arguments) {
