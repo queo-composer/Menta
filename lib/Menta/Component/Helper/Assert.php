@@ -127,13 +127,18 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @param string $message
+	 * @param bool $trim
 	 * @return void
 	 */
-	public function assertElementEqualsToText($element, $text, $message='') {
+	public function assertElementEqualsToText($element, $text, $message='', $trim=true) {
 		if ($message == '') {
 			$message = sprintf('Element "%s" does not equal to text "%s"', $this->getHelperCommon()->element2String($element), $text);
 		}
-		$this->getTest()->assertEquals($text, $this->getHelperCommon()->getText($element), $message);
+		$actualText = $this->getHelperCommon()->getText($element);
+		if ($trim) {
+			$actualText = trim($actualText);
+		}
+		$this->getTest()->assertEquals($text, $actualText, $message);
 	}
 
 	/**
