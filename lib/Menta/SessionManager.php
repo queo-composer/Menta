@@ -90,6 +90,27 @@ class Menta_SessionManager {
 	}
 
 	/**
+	 * Get session id.
+	 * If no session is given the current session will be used
+	 *
+	 * @param WebDriver\Session $session
+	 * @throws Exception
+	 * @return string
+	 */
+	public static function getSessionId(\WebDriver\Session $session=NULL) {
+		if (is_null($session)) {
+			if (self::activeSessionExists()) {
+				$session = self::getSession();
+			} else {
+				throw new Exception('No session given and no active session found');
+			}
+		}
+		// the session id is the last part of the url
+		$sessionId = array_pop(explode('/', $session->getUrl()));
+		return $sessionId;
+	}
+
+	/**
 	 * Check if an active session exists
 	 *
 	 * @static
