@@ -11,15 +11,15 @@
 		div.wrapper { border: none; padding: 0; margin: 0; }
 		div.browser { float:left; }
 		h2 { font-size: 12px; margin: 0; }
-		div.test { border-style: solid; border-width: 1px 0 0 6px; position: relative; margin: 4px 0 0 10px; padding: 3px 30px 3px 3px; color: black; }
+		div.test { border-style: solid; border-width: 1px 0 0 6px; position: relative; margin: 4px 0 0 10px; padding: 3px 30px 3px 10px; }
 		div.test:hover { border-color: #777; }
 		.test { min-width: 300px; overflow: hidden; }
 		.dataset .test { min-width: 280px; }
-		.error { border-color: red; background-color: #ffb6c1; }
-		.failed { border-color: red; background-color: #ffb6c1;  }
-		.passed { border-color: green; background-color: #90ee90; }
-		.skipped { border-color: yellow; background-color: #ffffe0;}
-		.incomplete { border-color: yellow; background-color: #ffffe0;}
+		.error { border-color: #C20000; background-color: #FFFBD3; color: #C20000; }
+		.failed { border-color: #C20000; background-color: #FFFBD3; color: #C20000; }
+		.passed { border-color: #65C400; background-color: #DBFFB4; color: #3D7700; }
+		.skipped { border-color: aqua; background-color: #E0FFFF; color: #001111; }
+		.incomplete { border-color: #FAF834; background-color: #FCFB98; color: #131313; }
 		.duration { position: absolute; top: 2px; right: 2px; font-size: 9px; }
 		pre { margin: 0; padding: 0; overflow: auto; }
 		ul { padding: 0; margin: 0; }
@@ -31,8 +31,8 @@
 		#progress-wrapper { width: auto; height: 30px; }
 		.progress-value { height: 30px; display: block; float: left; }
 		.progress-inner { border-style: solid; border-width: 1px 0 0 5px; display: block; height: 29px; padding: 3px; }
-		.toggle { text-decoration: none; color: black; background-color: rgba(255, 255, 255, 0.5); padding: 2px 5px; margin-left: 3px; }
-		.description { margin: 5px; font-style: italic }
+		.toggle { text-decoration: none; color: black; background-color: rgba(255, 255, 255, 0.8); padding: 2px 5px; margin-left: 3px; }
+		.description { font-style: italic; background-color:rgba(255,255,255,0.8); padding: 3px; }
 	</style>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
 	<script type="text/javascript">
