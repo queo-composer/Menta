@@ -32,6 +32,7 @@
 		.progress-value { height: 30px; display: block; float: left; }
 		.progress-inner { border-style: solid; border-width: 1px 0 0 5px; display: block; height: 29px; padding: 3px; }
 		.toggle { text-decoration: none; color: black; background-color: rgba(255, 255, 255, 0.5); padding: 2px 5px; margin-left: 3px; }
+		.description { margin: 5px; font-style: italic }
 	</style>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -108,6 +109,9 @@
 				if ($this.find('.screenshots').length) {
 					$header.append('<a title="Toggle screenshots" href="#" class="toggle toggle-screenshots">S</a>');
 				}
+				if ($this.find('.description').length) {
+					$header.append('<a title="Toggle description" href="#" class="toggle toggle-description">D</a>');
+				}
 			});
 			$('.exception, .screenshots').hide();
 
@@ -119,11 +123,18 @@
 				$(this).parents('.test').find('.screenshots').toggle();
 				return false;
 			});
+			$('.test .toggle-description').click(function() {
+				$(this).parents('.test').find('.description').toggle();
+				return false;
+			});
 
 			$('#show-all-screenshots').click(function() { $('.screenshots').show(); })
 			$('#hide-all-screenshots').click(function() { $('.screenshots').hide(); })
 			$('#show-all-exceptions').click(function() { $('.exception').show(); })
 			$('#hide-all-exceptions').click(function() { $('.exception').hide(); })
+			$('#show-all-descriptions').click(function() { $('.description').show(); })
+			$('#hide-all-descriptions').click(function() { $('.description').hide(); })
+
 
 			updateVisibility();
 			$('.filter input').click(updateVisibility);
@@ -159,12 +170,18 @@
 			<?php endforeach; ?>
 			<li class="label">Features:</li>
 			<li><input type="checkbox" id="feature_duration"><label for="feature_duration">Duration Heatmap</label></li>
+
 			<li class="label">Duration:</li>
 			<li id="selected-duration"></li>
+
 			<li class="label">Screenshots:</li>
 			<li><a href="#" id="show-all-screenshots">Show</a> | <a href="#" id="hide-all-screenshots">Hide</a></li>
+
 			<li class="label">Exceptions:</li>
 			<li><a href="#" id="show-all-exceptions">Show</a> | <a href="#" id="hide-all-exceptions">Hide</a></li>
+
+			<li class="label">Descriptions:</li>
+			<li><a href="#" id="show-all-descriptions">Show</a> | <a href="#" id="hide-all-descriptions">Hide</a></li>
 		</ul>
 	</div>
 

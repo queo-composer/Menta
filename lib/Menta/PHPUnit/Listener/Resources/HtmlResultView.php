@@ -21,6 +21,11 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 		$result .= '<div class="test '.$this->getStatusName($test['status']).'">';
 			$result .= '<div class="duration">'.round($test['time'], $roundPrecision).'s</div>';
 			$result .= '<h2>'.$this->shorten($testName).'</h2>';
+
+			if (!empty($test['description'])) {
+				$result .= '<div class="description">' . nl2br($test['description']) . '</div>';
+			}
+
 			$result .= '<div class="content">';
 
 				if ($test['exception'] instanceof Exception) {

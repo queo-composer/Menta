@@ -50,6 +50,20 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
 		$this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED;
 	}
 
+	public function getDocComment(PHPUnit_Framework_Test $test) {
+		$class = new ReflectionClass($test);
+		$method = $class->getMethod($test->getName(false));
+		$docComment = $method->getDocComment();
+		$docComment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#', '$1', $docComment);
+		$docComment - "\n".$docComment;
+		$endOfDescription = strpos($docComment, "\n@");
+		if ($endOfDescription !== false) {
+			$docComment = substr($docComment, 0, $endOfDescription);
+		}
+		$docComment = trim($docComment);
+		return $docComment;
+	}
+
 	public function endTest(PHPUnit_Framework_Test $test, $time) {
 
 		$testName = PHPUnit_Util_Test::describe($test);
@@ -76,7 +90,8 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
 			'testName' => $testName,
 			'time' => $time,
 			'exception' => $this->lastResult,
-			'status' => $this->lastStatus
+			'status' => $this->lastStatus,
+			'description' => $this->getDocComment($test)
 		);
 
 		if ($test instanceof Menta_Interface_ScreenshotTestcase) { /* @var $test Menta_Interface_ScreenshotTestcase */
