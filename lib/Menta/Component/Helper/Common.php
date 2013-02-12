@@ -229,7 +229,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		$element = $this->getElement($element);
 		if ($resetContent) {
 			// got to the end, mark everything to the beginning to overwrite existing content
-			$element->value(array('value' => array(\WebDriver\Key::END . \WebDriver\Key::SHIFT . \WebDriver\Key::HOME)));
+			$element->value(array('value' => array(\WebDriver\Key::END . \WebDriver\Key::SHIFT . \WebDriver\Key::HOME . \WebDriver\Key::BACKSPACE)));
 		}
 		$element->value(array('value' => array($text)));
 		if ($leaveFieldAfterwards) {
