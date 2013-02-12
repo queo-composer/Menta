@@ -429,28 +429,4 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 		$this->getHelperAssert()->assertElementContainsText($element, $text, $message);
 	}
 
-
-	/* Convenience methods for code completion */
-
-	/**
-	 * @return Menta_Component_Helper_Common
-	 */
-	public function getHelperCommon() {
-		return Menta_ComponentManager::get('Menta_Component_Helper_Common');
-	}
-
-	/**
-	 * @return Menta_Component_Helper_Wait
-	 */
-	public  function getHelperWait() {
-		return Menta_ComponentManager::get('Menta_Component_Helper_Wait');
-	}
-
-	/**
-	 * @return Menta_Component_Helper_Assert
-	 */
-	public  function getHelperAssert() {
-		return Menta_ComponentManager::get('Menta_Component_Helper_Assert');
-	}
-
 }

@@ -142,15 +142,6 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	}
 
 	/**
-	 * Get common helper
-	 *
-	 * @return Menta_Component_Helper_Common
-	 */
-	protected function getHelperCommon() {
-		return Menta_ComponentManager::get('Menta_Component_Helper_Common');
-	}
-
-	/**
 	 * Checks if body tag contains class
 	 *
 	 * @author Fabrizio Branca
