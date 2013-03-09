@@ -429,4 +429,24 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 		$this->getHelperAssert()->assertElementContainsText($element, $text, $message);
 	}
 
+	/**
+	 * Get current url
+	 *
+	 * @return string
+	 */
+	public function getLocation() {
+		return $this->getSession()->__call('getUrl', array());
+	}
+
+	/**
+	 * Assert element containts text
+	 *
+	 * @param string|array|\WebDriver\Element $element
+	 * @return bool
+	 */
+	public function isEditable($element) {
+		return $this->getElement($element)->enabled();
+	}
+
+
 }
