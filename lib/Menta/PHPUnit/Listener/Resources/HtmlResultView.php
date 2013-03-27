@@ -47,6 +47,17 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 		return $result;
 	}
 
+	protected function getPreviousPath() {
+		$conf = Menta_ConfigurationPhpUnitVars::getInstance();
+		if ($conf->issetKey('report.previous')) {
+			$previousReport = $conf->getValue('report.previous');
+			if (is_dir($previousReport)) {
+				return $previousReport;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Print screenshots
 	 *
@@ -61,19 +72,57 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 			$result .= '<li class="screenshot">';
 
 			try {
-				$uniqId = md5(uniqid(rand(), TRUE));
-				$filenName = 'screenshot_' . $uniqId . '.png';
-				$thumbnailName = 'screenshot_' . $uniqId . '_thumb.png';
+				$fileName = 'screenshot_' . $screenshot->getId() . '.png';
+				$thumbnailName = 'screenshot_' . $screenshot->getId() . '_thumb.png';
 
-				$screenshot->writeToDisk($directory . DIRECTORY_SEPARATOR . $filenName);
+				$screenshot->writeToDisk($directory . DIRECTORY_SEPARATOR . $fileName);
 
 				// create thumbnail
-				$simpleImage = new Menta_Util_SimpleImage($directory . DIRECTORY_SEPARATOR . $filenName);
+				$simpleImage = new Menta_Util_SimpleImage($directory . DIRECTORY_SEPARATOR . $fileName);
 				$simpleImage->resizeToWidth(100)->save($directory . DIRECTORY_SEPARATOR . $thumbnailName, IMAGETYPE_PNG);
 
-				$result .= '<a title="'.$screenshot->getTitle().'" href="'.$filenName.'">';
+				$result .= '<a class="current" title="'.$screenshot->getTitle().'" href="'.$fileName.'">';
 					$result .= '<img src="'.$thumbnailName.'" width="100" />';
 				$result .= '</a>';
+
+
+
+				$previousPath = $this->getPreviousPath();
+				$previousScreenshot = $previousPath . DIRECTORY_SEPARATOR . $fileName;
+
+				if ($previousPath && is_file($previousScreenshot)) {
+					if (md5_file($directory . DIRECTORY_SEPARATOR . $fileName) != md5_file($previousScreenshot)) {
+
+						$fileNamePrev = 'screenshot_' . $screenshot->getId() . '.prev.png';
+						$thumbnailNamePrev = 'screenshot_' . $screenshot->getId() . '_thumb.prev.png';
+
+						link($previousScreenshot, $directory . DIRECTORY_SEPARATOR . $fileNamePrev);
+						link($previousPath . DIRECTORY_SEPARATOR . $thumbnailName, $directory . DIRECTORY_SEPARATOR . $thumbnailNamePrev);
+
+						$result .= '<a class="previous" title="'.$screenshot->getTitle().'" href="'.$fileNamePrev.'">';
+							$result .= '<img src="'.$thumbnailNamePrev.'" width="100" />';
+						$result .= '</a>';
+
+						$fileNameDiff = 'screenshot_' . $screenshot->getId() . '.diff.png';
+						$thumbnailNameDiff = 'screenshot_' . $screenshot->getId() . '_thumb.diff.png';
+
+						$this->createPdiff(
+							$directory . DIRECTORY_SEPARATOR . $fileNamePrev,
+							$directory . DIRECTORY_SEPARATOR . $fileName,
+							$directory . DIRECTORY_SEPARATOR . $fileNameDiff
+						);
+
+						// create thumbnail
+						$simpleImage = new Menta_Util_SimpleImage($directory . DIRECTORY_SEPARATOR . $fileNameDiff);
+						$simpleImage->resizeToWidth(100)->save($directory . DIRECTORY_SEPARATOR . $thumbnailNameDiff, IMAGETYPE_PNG);
+
+						$result .= '<a class="current" title="'.$screenshot->getTitle().'" href="'.$fileNameDiff.'">';
+							$result .= '<img src="'.$thumbnailNameDiff.'" width="100" />';
+						$result .= '</a>';
+
+					}
+				}
+
 			} catch (Exception $e) {
 				$result .= 'EXCEPTION: '.$e->getMessage();
 			}
@@ -81,6 +130,25 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 		}
 		$result .= '</ul>';
 		return $result;
+	}
+
+	/**
+	 * Create pdiff
+	 *
+	 * @param $imageA
+	 * @param $imageB
+	 * @param $target
+	 * @throws Exception
+	 */
+	public function createPdiff($imageA, $imageB, $target) {
+		$command = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('report.pdiff_command');
+		$command = sprintf($command,
+			escapeshellarg($imageA),
+			escapeshellarg($imageB),
+			escapeshellarg($target)
+		);
+		// TODO: check return value
+		exec($command);
 	}
 
 	/**

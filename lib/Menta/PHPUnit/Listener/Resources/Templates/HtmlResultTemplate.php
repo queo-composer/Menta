@@ -114,6 +114,7 @@
 				}
 			});
 			$('.exception, .screenshots').hide();
+			$('.exception, .description').hide();
 
 			$('.test .toggle-exception').click(function() {
 				$(this).parents('.test').find('.exception').toggle();
