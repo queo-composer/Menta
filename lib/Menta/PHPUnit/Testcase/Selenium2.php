@@ -144,9 +144,10 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 * @param string $description
 	 * @param string $type
 	 * @param array $trace
+     * @param string $id
 	 * @return bool|Menta_Util_Screenshot
 	 */
-	public function takeScreenshot($title=NULL, $description=NULL, $type=NULL, array $trace=NULL) {
+	public function takeScreenshot($title=NULL, $description=NULL, $type=NULL, array $trace=NULL, $id=NULL) {
 
 		// don't init a new session if there is none
 		if (!Menta_SessionManager::activeSessionExists()) {
@@ -162,7 +163,9 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 		$screenshot = new Menta_Util_Screenshot();
 		$screenshot->setBase64Image($base64Image);
 		$screenshot->setTime($time);
+        if (!is_null($id)) { $screenshot->setId($id); }
 		if (!is_null($title)) { $screenshot->setTitle($title); }
+        if (!is_null($title) && is_null($id)) { $screenshot->setId($title); } // reuse title as id
 		if (!is_null($description)) { $screenshot->setDescription($description); }
 		if (!is_null($type)) { $screenshot->setType($type); }
 		$screenshot->setTrace(!is_null($trace) ? $trace : debug_backtrace());
