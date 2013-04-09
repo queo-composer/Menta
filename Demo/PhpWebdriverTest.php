@@ -39,6 +39,7 @@ try {
 
 	# close session/connection
 	$session->close();
+
 } catch (Exception $e) {
 	echo $e->getMessage();
 }
