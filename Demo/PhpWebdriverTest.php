@@ -37,9 +37,8 @@ try {
 
 	sleep(5);
 
+	# close session/connection
+	$session->close();
 } catch (Exception $e) {
 	echo $e->getMessage();
 }
-
-# close session/connection
-$session->close();
