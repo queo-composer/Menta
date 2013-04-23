@@ -312,5 +312,22 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		return false;
 	}
 
+	/**
+	 * Add form data
+	 * array(<locator> => <value>,...)
+	 *
+	 * @param array $data
+	 * @param string $locatorPrefix
+	 */
+	public function addFormData(array $data, $locatorPrefix = '') {
+		foreach ($data as $field => $value) {
+			if (substr($value, 0, 6) == 'label=') {
+				$this->select($locatorPrefix . $field, $value);
+			} else {
+				$this->type($locatorPrefix . $field, $value);
+			}
+		}
+	}
+
 }
 

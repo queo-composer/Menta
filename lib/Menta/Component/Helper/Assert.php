@@ -147,11 +147,34 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	 * @author Fabrizio Branca
 	 * @since 2012-11-16
 	 * @param string $class
+	 * @param string $message
 	 * @return void
 	 */
-	public function assertBodyClass($class) {
-		$xpath = '//body['.Menta_Util_Div::contains($class).']';
-		$this->assertElementPresent($xpath);
+	public function assertBodyClass($class, $message='') {
+		$actualClass = $this->getHelperCommon()->getElement('//body')->attribute('class');
+		$this->getTest()->assertContains($class, $actualClass, $message);
+	}
+
+	/**
+	 * Checks if a input is checked (radio button, checkbox)
+	 *
+	 * @param string|array|\WebDriver\Element $element
+	 * @param $message
+	 */
+	public function assertChecked($element, $message='') {
+		$attribute = $this->getHelperCommon()->getElement($element)->attribute('checked');
+		$this->getTest()->assertEquals('true', $attribute, $message);
+	}
+
+	/**
+	 * Checks if a input is not checked (radio button, checkbox)
+	 *
+	 * @param string|array|\WebDriver\Element $element
+	 * @param $message
+	 */
+	public function assertNotChecked($element, $message='') {
+		$attribute = $this->getHelperCommon()->getElement($element)->attribute('checked');
+		$this->getTest()->assertNull($attribute, $message);
 	}
 
 }
