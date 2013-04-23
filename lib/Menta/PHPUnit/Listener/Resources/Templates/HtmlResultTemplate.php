@@ -23,8 +23,8 @@
 		.duration { position: absolute; top: 2px; right: 2px; font-size: 9px; }
 		pre { margin: 0; padding: 0; overflow: auto; }
 		ul { padding: 0; margin: 0; }
-		li { list-style: none; float: left; padding: 0 5px; margin: 0 0 0 5px; }
-		.legend li { border-top: 1px solid; border-left: 5px solid; }
+		li { list-style: none; padding: 0 5px; margin: 0 0 0 5px; }
+		.legend li { border-top: 1px solid; border-left: 5px solid; float: left; }
 		li.label { border: none; font-weight: bold; }
 		.legend,
 		.bar { overflow: hidden; margin-bottom: 10px; }

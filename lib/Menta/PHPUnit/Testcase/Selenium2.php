@@ -30,6 +30,11 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	protected $screenshots = array();
 
 	/**
+	 * @var array info
+	 */
+	protected $info = array();
+
+	/**
 	 * @var bool
 	 */
 	protected $freshSessionForEachTestMethod = false;
@@ -128,6 +133,25 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 			}
 		}
 		parent::onNotSuccessfulTest($e);
+	}
+
+
+	/**
+	 * Add info
+	 *
+	 * @param $info
+	 */
+	public function addInfo($info) {
+		$this->info[] = $info;
+	}
+
+	/**
+	 * Get all information
+	 *
+	 * @return array
+	 */
+	public function getInfo() {
+		return $this->info;
 	}
 
 

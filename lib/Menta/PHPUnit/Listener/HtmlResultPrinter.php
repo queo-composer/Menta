@@ -91,7 +91,7 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
 			'time' => $time,
 			'exception' => $this->lastResult,
 			'status' => $this->lastStatus,
-			'description' => $this->getDocComment($test)
+			'description' => $this->getDocComment($test),
 		);
 
 		if ($test instanceof Menta_Interface_ScreenshotTestcase) { /* @var $test Menta_Interface_ScreenshotTestcase */
@@ -99,6 +99,10 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
 			if (is_array($screenshots) && count($screenshots) > 0) {
 				$result['screenshots'] = $screenshots;
 			}
+		}
+
+		if (method_exists($test, 'getInfo')) {
+			$result['info'] = $test->getInfo();
 		}
 
 		if (isset($this->count[$this->lastStatus])) {
@@ -156,6 +160,7 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
 		$templateVars['basedir'] = dirname($this->targetFile);
 		$templateVars['results'] = $this->results;
 		$templateVars['count'] = $this->count;
+
 		return parent::flush($templateVars);
 	}
 

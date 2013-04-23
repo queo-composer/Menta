@@ -26,6 +26,14 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 				$result .= '<div class="description">' . nl2br($test['description']) . '</div>';
 			}
 
+			if (is_array($test['info'])) {
+				$result .= '<ul class="info">';
+				foreach ($test['info'] as $info) {
+					$result .= '<li>'.$info.'</li>';
+				}
+				$result .= '</ul>';
+			}
+
 			$result .= '<div class="content">';
 
 				if ($test['exception'] instanceof Exception) {

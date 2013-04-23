@@ -26,7 +26,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	/**
 	 * Get test object
 	 *
-	 * @return PHPUnit_Framework_TestCase
+	 * @return Menta_PHPUnit_Testcase_Selenium2
 	 * @throws Exception if testcase is not available
 	 */
 	public function getTest() {
