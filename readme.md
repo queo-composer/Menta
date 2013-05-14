@@ -1,3 +1,5 @@
+# Menta Documentation
+
 ## Getting started
 
 1.  Get selenium server from http://seleniumhq.org/download/ and run it
@@ -16,6 +18,10 @@
 
         cd Menta/Demo
         phpunit MentaDemoTest.php
+
+## Setting up a test folder structure
+
+### Bootstrapping and Autoloading
 
 ## Testcases
 
@@ -44,7 +50,40 @@ Rewrite mechanism to refine/override
 
 ## Event/Observers
 
+## Configurations
+
+## Session management
+
+### Reuse browser sessions
+
+### Setting up the session
+
+## Screenshots
+
 ## PHPUnit
+
+### Base classes
+
+Selenium1 extends Selenium2 extends PHPUnit
+
+### Running Tests
+
+	cd /var/www
+	git clone --recursive git@git.aoesupport.com:users/fabrizio.branca/TestSkeleton.git
+
+	cd /var/www/TestSkeleton
+	./composer.phar install
+
+	cd /var/www/TestSkeleton/Tests
+	mkdir -p ../../build/reports
+
+	# Run single test
+	../vendor/bin/phpunit -c ../conf/devfb.ff.vmhost.xml General/ScreenshotsTest.php
+
+	# Run all tests
+	../vendor/bin/phpunit -c ../conf/devfb.ff.vmhost.xml ../vendor/aoemedia/menta/lib/Menta/Util/CreateTestSuite.php
+
+	# Report will be in /var/www/build/reports
 
 ### HTML Report
 
