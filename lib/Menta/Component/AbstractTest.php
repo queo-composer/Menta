@@ -13,37 +13,6 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	protected $test;
 
 	/**
-	 * Array with label translations
-	 * @var array | NULL
-	 */
-	protected $translationArray = NULL;
-
-	/**
-	 * Override this method to add new label translation
-	 */
-	public function loadTranslation() {
-		if ($this->translationArray === NULL) {
-			$this->translationArray = array();
-		}
-	}
-
-	public function __construct() {
-		parent::__construct();
-		$this->loadTranslation();
-	}
-
-	/**
-	 * Returns translation of given label
-	 * @param string $key
-	 * @return string
-	 */
-	public function __($key) {
-		if(isset($this->translationArray[$key])) {
-			return $this->translationArray[$key];
-		} else return $key;
-	}
-
-	/**
 	 * Set test object
 	 *
 	 * @param PHPUnit_Framework_TestCase $test
@@ -57,7 +26,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract {
 	/**
 	 * Get test object
 	 *
-	 * @return PHPUnit_Framework_TestCase
+	 * @return Menta_PHPUnit_Testcase_Selenium2
 	 * @throws Exception if testcase is not available
 	 */
 	public function getTest() {

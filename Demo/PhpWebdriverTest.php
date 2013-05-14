@@ -19,13 +19,13 @@ try {
 	$session->open('http://www.google.com/ncr');
 
 	# Search
-	$input = $session->element(WebDriver_Container::ID, 'lst-ib');
+	$input = $session->element(\WebDriver\Container::ID, 'lst-ib');
 	$input->value(array('value' => array('AOE media')));
-	$input->value(array('value' => array(WebDriver_Element::ReturnKey)));
+	$input->value(array('value' => array(\WebDriver\Element::ReturnKey)));
 
 	sleep(2);
 
-	$firstResult = $session->element(WebDriver_Container::XPATH, '//ol[@id="rso"]/li[1]//a');
+	$firstResult = $session->element(\WebDriver\Container::XPATH, '//ol[@id="rso"]/li[1]//a');
 	printf("Search result: %s\n", $firstResult->text());
 
 	$firstResult->click();

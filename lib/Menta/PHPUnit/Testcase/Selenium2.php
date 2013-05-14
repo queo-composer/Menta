@@ -30,6 +30,11 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	protected $screenshots = array();
 
 	/**
+	 * @var array info
+	 */
+	protected $info = array();
+
+	/**
 	 * @var bool
 	 */
 	protected $freshSessionForEachTestMethod = false;
@@ -89,12 +94,12 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 * Get webdriver session
 	 *
 	 * @param bool $forceNew
-	 * @return WebDriver_Session
+	 * @return \WebDriver\Session
 	 */
 	public function getSession($forceNew=false) {
 		try {
 			return Menta_SessionManager::getSession($forceNew);
-		} catch (WebDriver_Exception_CurlExec $e) {
+		} catch (\WebDriver\Exception $e) {
 			$this->markTestSkipped($e->getMessage()); // couldn't connect to host
 		}
 	}
@@ -131,6 +136,25 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	}
 
 
+	/**
+	 * Add info
+	 *
+	 * @param $info
+	 */
+	public function addInfo($info) {
+		$this->info[] = $info;
+	}
+
+	/**
+	 * Get all information
+	 *
+	 * @return array
+	 */
+	public function getInfo() {
+		return $this->info;
+	}
+
+
 
 	/**
 	 * METHODS IMPLEMENTING INTERFACE:
@@ -144,9 +168,10 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 * @param string $description
 	 * @param string $type
 	 * @param array $trace
+     * @param string $id
 	 * @return bool|Menta_Util_Screenshot
 	 */
-	public function takeScreenshot($title=NULL, $description=NULL, $type=NULL, array $trace=NULL) {
+	public function takeScreenshot($title=NULL, $description=NULL, $type=NULL, array $trace=NULL, $id=NULL) {
 
 		// don't init a new session if there is none
 		if (!Menta_SessionManager::activeSessionExists()) {
@@ -162,7 +187,9 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 		$screenshot = new Menta_Util_Screenshot();
 		$screenshot->setBase64Image($base64Image);
 		$screenshot->setTime($time);
+        if (!is_null($id)) { $screenshot->setId($id); }
 		if (!is_null($title)) { $screenshot->setTitle($title); }
+        if (!is_null($title) && is_null($id)) { $screenshot->setId($title); } // reuse title as id
 		if (!is_null($description)) { $screenshot->setDescription($description); }
 		if (!is_null($type)) { $screenshot->setType($type); }
 		$screenshot->setTrace(!is_null($trace) ? $trace : debug_backtrace());

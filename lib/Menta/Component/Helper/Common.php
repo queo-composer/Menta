@@ -8,6 +8,49 @@
 class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 
 	/**
+	 * This domain will be prefixed to all relative urls when calling open()
+	 *
+	 * @var string
+	 */
+	protected $mainDomain;
+
+	/**
+	 * Open an url prefixed with the previously configured browserUrl
+	 *
+	 * @param string $url
+	 * @return \WebDriver\Session
+	 */
+	public function open($url) {
+		if (!preg_match('/^https?:/i', $url)) {
+			$url = $this->getMainDomain() . $url;
+		}
+		return $this->getSession()->open($url);
+	}
+
+	/**
+	 * Get main domain.
+	 * Fetches main domain from configuration if not set manually
+	 *
+	 * @return string
+	 */
+	public function getMainDomain() {
+		if (is_null($this->mainDomain)) {
+			$this->mainDomain = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
+			$this->mainDomain = rtrim($this->mainDomain, '/');
+		}
+		return $this->mainDomain;
+	}
+
+	/**
+	 * Set main domain
+	 *
+	 * @param $mainDomain
+	 */
+	public function setMainDomain($mainDomain) {
+		$this->mainDomain = $mainDomain;
+	}
+
+	/**
 	 * Parse locator
 	 *
 	 * Currently detected:
@@ -23,17 +66,17 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		if (is_array($locator) && isset($locator['using']) && isset($locator['value'])) {
 			// already the correct element => do nothing
 		} elseif (substr($locator, 0, 6) == 'xpath=') {
-			$locator = array('using' => WebDriver_Container::XPATH, 'value' => substr($locator, 6));
+			$locator = array('using' => \WebDriver\LocatorStrategy::XPATH, 'value' => substr($locator, 6));
 		} elseif (strpos($locator, '/') !== false) {
-			$locator = array('using' => WebDriver_Container::XPATH, 'value' => $locator);
+			$locator = array('using' => \WebDriver\LocatorStrategy::XPATH, 'value' => $locator);
 		} elseif (substr($locator, 0, 3) == 'id=') {
-			$locator = array('using' => WebDriver_Container::ID, 'value' => substr($locator, 3));
+			$locator = array('using' => \WebDriver\LocatorStrategy::ID, 'value' => substr($locator, 3));
 		} elseif (substr($locator, 0, 4) == 'css=') {
-			$locator = array('using' => WebDriver_Container::CSS_SELECTOR, 'value' => substr($locator, 4));
+			$locator = array('using' => \WebDriver\LocatorStrategy::CSS_SELECTOR, 'value' => substr($locator, 4));
 		} elseif (substr($locator, 0, 5) == 'link=') {
-			$locator = array('using' => WebDriver_Container::LINK_TEXT, 'value' => substr($locator, 5));
+			$locator = array('using' => \WebDriver\LocatorStrategy::LINK_TEXT, 'value' => substr($locator, 5));
 		} elseif (is_string($locator)) {
-			$locator = array('using' => WebDriver_Container::ID, 'value' => $locator);
+			$locator = array('using' => \WebDriver\LocatorStrategy::ID, 'value' => $locator);
 		} else {
 			throw new Exception('Could not parse locator');
 		}
@@ -48,10 +91,10 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	 * @throws Exception
 	 * @param $element
 	 * @param $parent
-	 * @return WebDriver_Element
+	 * @return \WebDriver\Element
 	 */
 	public function getElement($element, $parent=NULL) {
-		if ($element instanceof WebDriver_Element) {
+		if ($element instanceof \WebDriver\Element) {
 			// already the correct element => do nothing
 		} else {
 			if (is_null($parent)) {
@@ -59,7 +102,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 			}
 			$element = $parent->element($this->parseLocator($element));
 		}
-		if (!$element instanceof WebDriver_Element) {
+		if (!$element instanceof \WebDriver\Element) {
 			throw new Exception("Element '$element' not found");
 		}
 		return $element;
@@ -76,8 +119,8 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 			// do nothing
 		} elseif (is_array($element) && isset($element['using']) && isset($element['value'])) {
 			$element = $element['using'] . '=' . $element['value'];
-		} elseif ($element instanceof WebDriver_Element) {
-			/* @var $element WebDriver_Element */
+		} elseif ($element instanceof \WebDriver\Element) {
+			/* @var $element \WebDriver\Element */
 			$element = $element->__toString();
 		} else {
 			$element = '[INVALID ELEMENT LOCATOR]';
@@ -119,7 +162,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	/**
 	 * Checks if checkbox, option or radiobutton is selected
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return boolean
 	 */
 	public function isSelected($element) {
@@ -199,7 +242,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	/**
 	 * Get text
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return string
 	 */
 	public function getText($element) {
@@ -209,17 +252,17 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	/**
 	 * Click on an element
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return void
 	 */
 	public function click($element) {
-		return $this->getElement($element)->click();
+		$this->getElement($element)->click();
 	}
 
 	/**
 	 * Type something into an input box
 	 *
-	 * @param tring|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @param bool $resetContent
 	 * @param bool $leaveFieldAfterwards
@@ -229,13 +272,13 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		$element = $this->getElement($element);
 		if ($resetContent) {
 			// got to the end, mark everything to the beginning to overwrite existing content
-			$element->value(array('value' => array(WebDriver_Element::End . WebDriver_Element::Shift . WebDriver_Element::Home)));
+			$element->value(array('value' => array(\WebDriver\Key::END . \WebDriver\Key::SHIFT . \WebDriver\Key::HOME . \WebDriver\Key::BACKSPACE)));
 		}
 		$element->value(array('value' => array($text)));
 		if ($leaveFieldAfterwards) {
 			try {
-				$element->value(array('value' => array(WebDriver_Element::Tab)));
-			} catch (WebDriver_Exception_StaleElementReference $e){
+				$element->value(array('value' => array(\WebDriver\Key::TAB)));
+			} catch (Exception $e){
 				echo $e->getMessage();
 			}
 		}
@@ -247,7 +290,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	 * - "value=<value>" -or-
 	 * - "label=<label>"
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $option
 	 * @throws Exception
 	 */
@@ -255,10 +298,10 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		$element = $this->getElement($element);
 		if (substr($option, 0, 6) == 'value=') {
 			$option = substr($option, 6);
-			$option = $element->element(WebDriver_Container::XPATH, 'option[@value="'.$option.'"]');
+			$option = $element->element(\WebDriver\LocatorStrategy::XPATH, 'option[@value="'.$option.'"]');
 		} elseif (substr($option, 0, 6) == 'label=') {
 			$option = substr($option, 6);
-			$option = $element->element(WebDriver_Container::XPATH, 'option[normalize-space(text())="'.$option.'"]');
+			$option = $element->element(\WebDriver\LocatorStrategy::XPATH, 'option[normalize-space(text())="'.$option.'"]');
 		} else {
 			throw new Exception('Expecting label to begin with "label=" or "value="');
 		}
@@ -268,7 +311,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	/**
 	 * Get selected label
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return bool|string
 	 */
 	public function getSelectedLabel($element) {
@@ -283,13 +326,13 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	/**
 	 * Get selected value
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @return bool|string
 	 */
 	public function getSelectedValue($element) {
 		$label = false;
 		$firstSelectedOption = $this->getFirstSelectedOption($element);
-		if ($firstSelectedOption !== false) {
+		if ($firstSelectedOption !== false) { /* @var $firstSelectedOption \Webdriver\Element */
 			$label = $firstSelectedOption->getAttribute('value');
 		}
 		return $label;
@@ -298,18 +341,35 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	/**
 	 * Get first selected option
 	 *
-	 * @param string|array|WebDriver_Element $element
-	 * @return bool|Webdriver_Element
+	 * @param string|array|\WebDriver\Element $element
+	 * @return bool|\Webdriver\Element
 	 */
 	public function getFirstSelectedOption($element) {
 		$element = $this->getElement($element);
-		$options = $element->elements(WebDriver_Element::XPATH, './/option');
-		foreach ($options as $option) { /* @var $option Webdriver_Element */
+		$options = $element->elements(\WebDriver\LocatorStrategy::XPATH, './/option');
+		foreach ($options as $option) { /* @var $option \Webdriver\Element */
 			if ($option->selected()) {
 				return $option;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Add form data
+	 * array(<locator> => <value>,...)
+	 *
+	 * @param array $data
+	 * @param string $locatorPrefix
+	 */
+	public function addFormData(array $data, $locatorPrefix = '') {
+		foreach ($data as $field => $value) {
+			if (substr($value, 0, 6) == 'label=') {
+				$this->select($locatorPrefix . $field, $value);
+			} else {
+				$this->type($locatorPrefix . $field, $value);
+			}
+		}
 	}
 
 }

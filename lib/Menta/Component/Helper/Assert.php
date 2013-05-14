@@ -59,7 +59,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element present
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $message
 	 * @return void
 	 */
@@ -73,7 +73,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element not present
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $message
 	 * @param bool $implictWait
 	 * @return void
@@ -109,7 +109,7 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element containts text
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @param string $message
 	 * @return void
@@ -124,25 +124,21 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	/**
 	 * Assert element containts text
 	 *
-	 * @param string|array|WebDriver_Element $element
+	 * @param string|array|\WebDriver\Element $element
 	 * @param string $text
 	 * @param string $message
+	 * @param bool $trim
 	 * @return void
 	 */
-	public function assertElementEqualsToText($element, $text, $message='') {
+	public function assertElementEqualsToText($element, $text, $message='', $trim=true) {
 		if ($message == '') {
 			$message = sprintf('Element "%s" does not equal to text "%s"', $this->getHelperCommon()->element2String($element), $text);
 		}
-		$this->getTest()->assertEquals($text, $this->getHelperCommon()->getText($element), $message);
-	}
-
-	/**
-	 * Get common helper
-	 *
-	 * @return Menta_Component_Helper_Common
-	 */
-	protected function getHelperCommon() {
-		return Menta_ComponentManager::get('Menta_Component_Helper_Common');
+		$actualText = $this->getHelperCommon()->getText($element);
+		if ($trim) {
+			$actualText = trim($actualText);
+		}
+		$this->getTest()->assertEquals($text, $actualText, $message);
 	}
 
 	/**
@@ -151,11 +147,34 @@ class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest {
 	 * @author Fabrizio Branca
 	 * @since 2012-11-16
 	 * @param string $class
+	 * @param string $message
 	 * @return void
 	 */
-	public function assertBodyClass($class) {
-		$xpath = '//body['.Menta_Util_Div::contains($class).']';
-		$this->assertElementPresent($xpath);
+	public function assertBodyClass($class, $message='') {
+		$actualClass = $this->getHelperCommon()->getElement('//body')->attribute('class');
+		$this->getTest()->assertContains($class, $actualClass, $message);
+	}
+
+	/**
+	 * Checks if a input is checked (radio button, checkbox)
+	 *
+	 * @param string|array|\WebDriver\Element $element
+	 * @param $message
+	 */
+	public function assertChecked($element, $message='') {
+		$attribute = $this->getHelperCommon()->getElement($element)->attribute('checked');
+		$this->getTest()->assertEquals('true', $attribute, $message);
+	}
+
+	/**
+	 * Checks if a input is not checked (radio button, checkbox)
+	 *
+	 * @param string|array|\WebDriver\Element $element
+	 * @param $message
+	 */
+	public function assertNotChecked($element, $message='') {
+		$attribute = $this->getHelperCommon()->getElement($element)->attribute('checked');
+		$this->getTest()->assertNull($attribute, $message);
 	}
 
 }

@@ -1,17 +1,18 @@
 <?php
 
+
 /**
  * Global session manager for connections to the Selenium 2 server
  */
 class Menta_SessionManager {
 
 	/**
-	 * @var WebDriver_Session
+	 * @var \WebDriver\Session
 	 */
 	protected static $session;
 
 	/**
-	 * @var WebDriver
+	 * @var \WebDriver\WebDriver
 	 */
 	protected static $webdriver;
 
@@ -54,14 +55,14 @@ class Menta_SessionManager {
 
 	/**
 	 * @static
-	 * @return WebDriver
+	 * @return \WebDriver\WebDriver
 	 */
 	public static function getWebdriver() {
 		if (is_null(self::$webdriver)) {
 			if (empty(self::$serverUrl)) {
 				throw new Exception('No serverUrl set. Call Menta_SessionManager::init() to configure first');
 			}
-			self::$webdriver = new WebDriver(self::$serverUrl);
+			self::$webdriver = new \WebDriver\WebDriver(self::$serverUrl);
 		}
 		return self::$webdriver;
 	}
@@ -69,7 +70,7 @@ class Menta_SessionManager {
 	/**
 	 * @param bool $forceNew
 	 * @static
-	 * @return WebDriver_Session
+	 * @return \WebDriver\Session
 	 */
 	public static function getSession($forceNew=false) {
 		if ($forceNew) {
@@ -77,7 +78,7 @@ class Menta_SessionManager {
 		}
 		if (is_null(self::$session)) {
 			self::$session = self::getWebdriver()->session(self::$browser, self::$additionalCapabilities);
-			if (!self::$session instanceof WebDriver_Session) {
+			if (!self::$session instanceof \WebDriver\Session) {
 				throw new Exception('Error while creating new session');
 			}
 			Menta_Events::dispatchEvent('after_session_create', array(
@@ -89,13 +90,34 @@ class Menta_SessionManager {
 	}
 
 	/**
+	 * Get session id.
+	 * If no session is given the current session will be used
+	 *
+	 * @param WebDriver\Session $session
+	 * @throws Exception
+	 * @return string
+	 */
+	public static function getSessionId(\WebDriver\Session $session=NULL) {
+		if (is_null($session)) {
+			if (self::activeSessionExists()) {
+				$session = self::getSession();
+			} else {
+				throw new Exception('No session given and no active session found');
+			}
+		}
+		// the session id is the last part of the url
+		$sessionId = array_pop(explode('/', $session->getUrl()));
+		return $sessionId;
+	}
+
+	/**
 	 * Check if an active session exists
 	 *
 	 * @static
 	 * @return bool
 	 */
 	public static function activeSessionExists() {
-		return (self::$session instanceof WebDriver_Session);
+		return (self::$session instanceof \WebDriver\Session);
 	}
 
 	/**

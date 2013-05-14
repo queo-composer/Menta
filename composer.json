@@ -1,0 +1,25 @@
+{
+    "name": "aoemedia/menta",
+    "type": "library",
+    "description": "Selenium 2 Testing Framework (for PHPUnit)",
+    "keywords": ["selenium", "webdriver", "phpunit", "browser"],
+    "homepage": "https://github.com/AOEmedia/Menta",
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Fabrizio Branca",
+            "email": "menta@fabrizio-branca.de",
+            "homepage": "http://www.fabrizio-branca.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "instaclick/php-webdriver": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Menta": "lib/"
+       }
+    }
+}

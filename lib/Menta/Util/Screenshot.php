@@ -22,6 +22,35 @@ class Menta_Util_Screenshot {
 
 	protected $base64Image;
 
+	protected $id;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->setId(md5(uniqid(rand(), TRUE)));
+	}
+
+	/**
+	 * Set id
+	 *
+	 * @param string
+	 */
+	public function setId($id) {
+		$id = preg_replace("/[^a-zA-Z0-9-_]+/", '_', $id);
+		$id = strtolower($id);
+		$this->id = $id;
+	}
+
+	/**
+	 * Get id
+	 *
+	 * @return string
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
 	/**
 	 * Write image to disk
 	 *
