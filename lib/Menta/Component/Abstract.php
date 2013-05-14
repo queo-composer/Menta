@@ -114,5 +114,4 @@ abstract class Menta_Component_Abstract implements Menta_Interface_Component {
 		return Menta_ComponentManager::get('Menta_Component_Helper_Wait');
 	}
 
-
 }

@@ -5,9 +5,14 @@ if (version_compare(PHP_VERSION, '5.3.0') <= 0) {
 }
 
 
-
+/**
+ * Menta bootstrap
+ */
 class Menta_Bootstrap {
 
+	/**
+	 * Initialize basic component system
+	 */
 	public static function init() {
 
 		define('MENTA_ROOTDIR', dirname(__FILE__));
@@ -26,7 +31,6 @@ class Menta_Bootstrap {
 					$component->setTest($GLOBALS['current_testcase']);
 			}
 		});
-
 
 		$shutDownCallback = array('Menta_Bootstrap', 'closeSeleniumSession');
 

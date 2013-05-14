@@ -17,3 +17,65 @@
         cd Menta/Demo
         phpunit MentaDemoTest.php
 
+## Testcases
+
+## Configuration handling
+
+default.xml vs. phpunit xml configuration
+
+## Components
+
+### Organization of components
+
+Project specific components
+Component library (plattform specific, agency specific)
+Rewrite mechanism to refine/override
+
+### Rewrites
+
+### Translations using __()
+
+## Helpers
+
+### Menta_Component_Helper_Common
+### Menta_Component_Helper_Assert
+### Menta_Component_Helper_Wait
+### Menta_Component_Helper_Screenshot
+
+## Event/Observers
+
+## PHPUnit
+
+### HTML Report
+
+### Integration in Jenkins
+
+### Text Result
+
+## Sauce Labs
+
+### Running on Sauce Labs
+
+### Reporting test results to Sauce Labs
+
+	/**
+	 * Will send the test result to sauce labs in case we're running tests there
+	 *
+	 * @return void
+	 */
+	protected function tearDown() {
+
+		$sauceUserId = $this->getConfiguration()->getValue('testing.sauce.userId');
+		$sauceAccessKey = $this->getConfiguration()->getValue('testing.sauce.accessKey');
+
+		if (!empty($sauceUserId) && !empty($sauceAccessKey) && Menta_SessionManager::activeSessionExists()) {
+			$status = $this->getStatus();
+			$passed = !($status == PHPUnit_Runner_BaseTestRunner::STATUS_ERROR || $status == PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE);
+			$rest = new WebDriver\SauceLabs\SauceRest($sauceUserId, $sauceAccessKey);
+			$rest->updateJob(Menta_SessionManager::getSessionId(), array(WebDriver\SauceLabs\Capability::PASSED => $passed));
+		}
+
+		parent::tearDown();
+	}
+
+![Alt text](Documentation/aoemedia-new_rgb_72dpi.jpg)

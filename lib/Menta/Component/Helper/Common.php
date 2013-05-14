@@ -8,6 +8,49 @@
 class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 
 	/**
+	 * This domain will be prefixed to all relative urls when calling open()
+	 *
+	 * @var string
+	 */
+	protected $mainDomain;
+
+	/**
+	 * Open an url prefixed with the previously configured browserUrl
+	 *
+	 * @param string $url
+	 * @return \WebDriver\Session
+	 */
+	public function open($url) {
+		if (!preg_match('/^https?:/i', $url)) {
+			$url = $this->getMainDomain() . $url;
+		}
+		return $this->getSession()->open($url);
+	}
+
+	/**
+	 * Get main domain.
+	 * Fetches main domain from configuration if not set manually
+	 *
+	 * @return string
+	 */
+	public function getMainDomain() {
+		if (is_null($this->mainDomain)) {
+			$this->mainDomain = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
+			$this->mainDomain = rtrim($this->mainDomain, '/');
+		}
+		return $this->mainDomain;
+	}
+
+	/**
+	 * Set main domain
+	 *
+	 * @param $mainDomain
+	 */
+	public function setMainDomain($mainDomain) {
+		$this->mainDomain = $mainDomain;
+	}
+
+	/**
 	 * Parse locator
 	 *
 	 * Currently detected:
@@ -213,7 +256,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	 * @return void
 	 */
 	public function click($element) {
-		return $this->getElement($element)->click();
+		$this->getElement($element)->click();
 	}
 
 	/**
@@ -289,7 +332,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	public function getSelectedValue($element) {
 		$label = false;
 		$firstSelectedOption = $this->getFirstSelectedOption($element);
-		if ($firstSelectedOption !== false) {
+		if ($firstSelectedOption !== false) { /* @var $firstSelectedOption \Webdriver\Element */
 			$label = $firstSelectedOption->getAttribute('value');
 		}
 		return $label;
