@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Selenium1_Testcase
  * Base class for selenium tests that takes care setup up the connection to the
@@ -11,7 +12,6 @@
  * @author Fabrizio Branca
  * @since 2011-11-18
  */
-
 abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCase implements Menta_Interface_ScreenshotTestcase {
 
 	/**
@@ -38,6 +38,11 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 * @var bool
 	 */
 	protected $freshSessionForEachTestMethod = false;
+
+	/**
+	 * @var bool
+	 */
+	protected $cleanupPreviousSession = false;
 
 	/**
 	 * @var Menta_Interface_Configuration
@@ -78,12 +83,14 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 	 * @return void
 	 */
 	public function setUp() {
-		if ($this->freshSessionForEachTestMethod) {
-			// close previous session if exits
-			// new session will be started on first call of
-			// Menta_SessionManager::getSession()
-			// or $this->getSession();
-			Menta_SessionManager::closeSession();
+		if (Menta_SessionManager::activeSessionExists()) {
+			if ($this->freshSessionForEachTestMethod) {
+				// Closes previous session if exists. A new session will be started on first call of Menta_SessionManager::getSession() or $this->getSession();
+				Menta_SessionManager::closeSession();
+			} elseif ($this->cleanupPreviousSession) {
+				// Deleting all cookies to cleanup any previous application session state
+				Menta_SessionManager::getSession()->deleteAllCookies();
+			}
 		}
 		parent::setUp();
 
