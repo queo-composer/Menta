@@ -31,7 +31,7 @@ class Menta_Events {
 		if (!isset(self::$observers[$eventKey])) {
 			self::$observers[$eventKey] = array();
 		}
-		self::$observers[$eventKey][]= $observer;
+		self::$observers[$eventKey][] = $observer;
 	}
 
 	/**
