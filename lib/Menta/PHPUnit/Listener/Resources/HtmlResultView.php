@@ -104,7 +104,17 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 						$fileNamePrev = 'screenshot_' . $screenshot->getId() . '.prev.png';
 						$thumbnailNamePrev = 'screenshot_' . $screenshot->getId() . '_thumb.prev.png';
 
+
+						// actual image
+						if (file_exists($directory . DIRECTORY_SEPARATOR . $fileNamePrev)) {
+							unlink($directory . DIRECTORY_SEPARATOR . $fileNamePrev);
+						}
 						link($previousScreenshot, $directory . DIRECTORY_SEPARATOR . $fileNamePrev);
+
+						// thumbnail
+						if (file_exists($directory . DIRECTORY_SEPARATOR . $thumbnailNamePrev)) {
+							unlink($directory . DIRECTORY_SEPARATOR . $thumbnailNamePrev);
+						}
 						link($previousPath . DIRECTORY_SEPARATOR . $thumbnailName, $directory . DIRECTORY_SEPARATOR . $thumbnailNamePrev);
 
 						$result .= '<a class="previous" title="'.$screenshot->getTitle().'" href="'.$fileNamePrev.'">';
