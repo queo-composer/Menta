@@ -68,6 +68,10 @@ abstract class Menta_PHPUnit_Listener_AbstractTemplatablePrinter extends PHPUnit
 		if (!is_dir($dir)) {
 			throw new Exception("Target dir '$dir' does not exist");
 		}
+		// clean target dir
+		foreach (glob($dir."/*") as $file) {
+			unlink($file);
+		}
 		if (!is_null($templateFile)) {
 			$this->templateFile = $templateFile;
 		}

@@ -83,6 +83,10 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 				$fileName = 'screenshot_' . $screenshot->getId() . '.png';
 				$thumbnailName = 'screenshot_' . $screenshot->getId() . '_thumb.png';
 
+				if (is_file($directory . DIRECTORY_SEPARATOR . $fileName)) {
+					$result .= 'Screenshot already exists. Skipping.';
+					continue;
+				}
 				$screenshot->writeToDisk($directory . DIRECTORY_SEPARATOR . $fileName);
 
 				// create thumbnail
@@ -138,7 +142,11 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 							$result .= '<img src="'.$thumbnailNameDiff.'" width="100" />';
 						$result .= '</a>';
 
+					} else {
+						$result .= 'PDIFF: Exact match.';
 					}
+				} elseif ($previousPath && !is_file($previousScreenshot)) {
+					$result .= 'PDFIFF: Couldn\'t find previous file';
 				}
 
 			} catch (Exception $e) {
