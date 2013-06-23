@@ -26,10 +26,10 @@ Rewrite mechanism to refine/override
 
 ## Helpers
 
-### Menta_Component_Helper_Common
-### Menta_Component_Helper_Assert
-### Menta_Component_Helper_Wait
-### Menta_Component_Helper_Screenshot
+### Common
+### Assert
+### Wait
+### Screenshot
 
 ## Event/Observers
 
@@ -90,11 +90,11 @@ Selenium1 extends Selenium2 extends PHPUnit
 		$sauceUserId = $this->getConfiguration()->getValue('testing.sauce.userId');
 		$sauceAccessKey = $this->getConfiguration()->getValue('testing.sauce.accessKey');
 
-		if (!empty($sauceUserId) && !empty($sauceAccessKey) && Menta_SessionManager::activeSessionExists()) {
+		if (!empty($sauceUserId) && !empty($sauceAccessKey) && SessionManager::activeSessionExists()) {
 			$status = $this->getStatus();
 			$passed = !($status == PHPUnit_Runner_BaseTestRunner::STATUS_ERROR || $status == PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE);
 			$rest = new WebDriver\SauceLabs\SauceRest($sauceUserId, $sauceAccessKey);
-			$rest->updateJob(Menta_SessionManager::getSessionId(), array(WebDriver\SauceLabs\Capability::PASSED => $passed));
+			$rest->updateJob(SessionManager::getSessionId(), array(WebDriver\SauceLabs\Capability::PASSED => $passed));
 		}
 
 		parent::tearDown();

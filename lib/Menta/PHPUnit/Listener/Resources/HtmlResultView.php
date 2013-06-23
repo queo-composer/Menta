@@ -1,11 +1,18 @@
 <?php
 
+namespace Menta\PHPUnit\Listener\Resources;
+
+use Menta\ConfigurationPhpUnitVars;
+use Menta\Util\Screenshot;
+use Menta\Util\SimpleImage;
+use Menta\Util\View;
+
 /**
  * View helper for HTML Result view
  *
  * @author Fabrizio Branca
  */
-class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View
+class HtmlResultView extends View
 {
 
     /**
@@ -62,7 +69,7 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View
 
     protected function getPreviousPath()
     {
-        $conf = Menta_ConfigurationPhpUnitVars::getInstance();
+        $conf = ConfigurationPhpUnitVars::getInstance();
         if ($conf->issetKey('report.previous')) {
             $previousReport = $conf->getValue('report.previous');
             if (is_dir($previousReport)) {
@@ -84,7 +91,7 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View
         $directory = $this->get('basedir');
         $result .= '<ul class="screenshots-list">';
         foreach ($screenshots as $screenshot) {
-            /* @var $screenshot Menta_Util_Screenshot */
+            /** @var $screenshot Screenshot */
             $result .= '<li class="screenshot">';
 
             try {
@@ -98,7 +105,7 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View
                 $screenshot->writeToDisk($directory . DIRECTORY_SEPARATOR . $fileName);
 
                 // create thumbnail
-                $simpleImage = new Menta_Util_SimpleImage($directory . DIRECTORY_SEPARATOR . $fileName);
+                $simpleImage = new SimpleImage($directory . DIRECTORY_SEPARATOR . $fileName);
                 $simpleImage->resizeToWidth(100)->save(
                     $directory . DIRECTORY_SEPARATOR . $thumbnailName,
                     IMAGETYPE_PNG
@@ -149,7 +156,7 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View
                         );
 
                         // create thumbnail
-                        $simpleImage = new Menta_Util_SimpleImage($directory . DIRECTORY_SEPARATOR . $fileNameDiff);
+                        $simpleImage = new SimpleImage($directory . DIRECTORY_SEPARATOR . $fileNameDiff);
                         $simpleImage->resizeToWidth(100)->save(
                             $directory . DIRECTORY_SEPARATOR . $thumbnailNameDiff,
                             IMAGETYPE_PNG
@@ -186,7 +193,7 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View
      */
     public function createPdiff($imageA, $imageB, $target)
     {
-        $command = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('report.pdiff_command');
+        $command = ConfigurationPhpUnitVars::getInstance()->getValue('report.pdiff_command');
         $command = sprintf(
             $command,
             escapeshellarg($imageA),

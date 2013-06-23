@@ -1,45 +1,50 @@
 <?php
 
-// bootstrap php-webdriver (assuming it is in a directorey "php-webdriver" next to the Menta root directory
-require_once dirname(__FILE__) . '/../../php-webdriver/WebDriver/__init__.php';
+namespace Demo;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use WebDriver\Container;
+use WebDriver\Element;
+use WebDriver\WebDriver;
 
 try {
 
-	# get webdriver
-	$webDriver = new WebDriver('http://seleniumserver:4444/wd/hub');
+    # get webdriver
+    $webDriver = new WebDriver('http://localhost:4444/wd/hub');
 
-	# create session
-	$session = $webDriver->session('firefox');
+    # create session
+    $session = $webDriver->session('firefox');
 
-	$session->window('main'); // focus
-	$session->window('main')->position(array('x' => 0, 'y' => 0)); // position
-	$session->window('main')->size(array('width' => 1280, 'height' => 1024)); // size
+    $session->window('main'); // focus
+    $session->window('main')->postPosition(array('x' => 0, 'y' => 0)); // position
+    $session->window('main')->postSize(array('width' => 1280, 'height' => 1024)); // size
 
-	# Got to google
-	$session->open('http://www.google.com/ncr');
+    # Got to google
+    $session->open('http://www.google.com/ncr');
 
-	# Search
-	$input = $session->element(\WebDriver\Container::ID, 'lst-ib');
-	$input->value(array('value' => array('AOE media')));
-	$input->value(array('value' => array(\WebDriver\Element::ReturnKey)));
+    # Search
+    $input = $session->element(Container::ID, 'lst-ib');
+    $input->value(array('value' => array('AOE media')));
+    $input->value(array('value' => array(Element::ReturnKey)));
 
-	sleep(2);
+    sleep(2);
 
-	$firstResult = $session->element(\WebDriver\Container::XPATH, '//ol[@id="rso"]/li[1]//a');
-	printf("Search result: %s\n", $firstResult->text());
+    $firstResult = $session->element(Container::XPATH, '//ol[@id="rso"]/li[1]//a');
+    printf("Search result: %s\n", $firstResult->text());
 
-	$firstResult->click();
+    $firstResult->click();
 
-	sleep(5);
+    sleep(5);
 
-	# Go back to search results
-	$session->back();
+    # Go back to search results
+    $session->back();
 
-	sleep(5);
+    sleep(5);
 
-	# close session/connection
-	$session->close();
+    # close session/connection
+    $session->close();
 
 } catch (Exception $e) {
-	echo $e->getMessage();
+    echo $e->getMessage();
 }

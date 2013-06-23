@@ -1,9 +1,11 @@
 <?php
 
+namespace Menta\Util;
+
 /**
  * Basic view class
  */
-class Menta_Util_View
+class View
 {
 
     /**

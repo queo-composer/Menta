@@ -1,11 +1,16 @@
 <?php
+
+namespace Menta\Component\Helper;
+
+use Menta\Component\AbstractComponent;
+
 /**
  * Common helper
  *
  * @author Fabrizio Branca
  * @since 2011-11-18
  */
-class Menta_Component_Helper_Common extends Menta_Component_Abstract
+class Common extends AbstractComponent
 {
 
     /**

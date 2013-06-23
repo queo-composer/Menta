@@ -1,4 +1,6 @@
 <?php
+
+namespace Menta\Util;
 /**
  * Simple Image
  *
@@ -17,7 +19,7 @@
  * GNU General Public License for more details:
  * http://www.gnu.org/licenses/gpl.html
  */
-class Menta_Util_SimpleImage
+class SimpleImage
 {
 
     /**
@@ -66,7 +68,7 @@ class Menta_Util_SimpleImage
      * @param int $image_type
      * @param int $compression
      * @param null $permissions
-     * @return Menta_Util_SimpleImage
+     * @return SimpleImage
      */
     public function save($filename, $image_type = IMAGETYPE_JPEG, $compression = 75, $permissions = null)
     {
@@ -96,7 +98,7 @@ class Menta_Util_SimpleImage
      * Output raw image stream directly
      *
      * @param int $image_type
-     * @return Menta_Util_SimpleImage
+     * @return SimpleImage
      */
     public function output($image_type = IMAGETYPE_JPEG)
     {
@@ -143,7 +145,7 @@ class Menta_Util_SimpleImage
      * Resize to height
      *
      * @param int $height
-     * @return Menta_Util_SimpleImage
+     * @return SimpleImage
      */
     public function resizeToHeight($height)
     {
@@ -157,7 +159,7 @@ class Menta_Util_SimpleImage
      * Resize to width
      *
      * @param $width
-     * @return Menta_Util_SimpleImage
+     * @return SimpleImage
      */
     public function resizeToWidth($width)
     {
@@ -171,7 +173,7 @@ class Menta_Util_SimpleImage
      * Scale image by a given factor
      *
      * @param $factor
-     * @return Menta_Util_SimpleImage
+     * @return SimpleImage
      */
     public function scale($factor)
     {
@@ -187,7 +189,7 @@ class Menta_Util_SimpleImage
      * @throws InvalidArgumentException
      * @param int $width
      * @param int $height
-     * @return Menta_Util_SimpleImage
+     * @return SimpleImage
      */
     public function resize($width, $height)
     {

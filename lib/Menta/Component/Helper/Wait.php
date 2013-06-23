@@ -1,4 +1,9 @@
 <?php
+
+namespace Menta\Component\Helper;
+
+use Menta\Component\AbstractComponent;
+
 /**
  * Wait
  *
@@ -8,7 +13,7 @@
  * @author Fabrizio Branca
  * @since 2011-11-18
  */
-class Menta_Component_Helper_Wait extends Menta_Component_Abstract
+class Wait extends AbstractComponent
 {
 
     /**
@@ -25,7 +30,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
      * Set default timeout
      *
      * @param $defaultTimeout
-     * @return Menta_Component_Helper_Wait
+     * @return Wait
      */
     public function setDefaultTimeout($defaultTimeout)
     {
@@ -37,7 +42,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
      * Set default timeout
      *
      * @param $defaultSleep
-     * @return Menta_Component_Helper_Wait
+     * @return Wait
      */
     public function setDefaultSleep($defaultSleep)
     {
@@ -84,7 +89,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
         return $this->wait(
             function () use ($locator, $parent) {
                 return $parent->getHelperCommon()->isElementPresent($locator);
-                /* @var $parent Menta_Component_Helper_Wait */
+                /* @var $parent Wait */
             },
             $timeout,
             $sleep
@@ -106,7 +111,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
         return $this->wait(
             function () use ($locator, $parent) {
                 return !$parent->getHelperCommon()->isElementPresent($locator);
-                /* @var $parent Menta_Component_Helper_Wait */
+                /* @var $parent Wait */
             },
             $timeout,
             $sleep
@@ -128,7 +133,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
         return $this->wait(
             function () use ($text, $parent) {
                 return $parent->getHelperCommon()->isTextPresent($text);
-                /* @var $parent Menta_Component_Helper_Wait */
+                /* @var $parent Wait */
             },
             $timeout,
             $sleep
@@ -150,7 +155,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
         return $this->wait(
             function () use ($text, $parent) {
                 return !$parent->getHelperCommon()->isTextPresent($text);
-                /* @var $parent Menta_Component_Helper_Wait */
+                /* @var $parent Wait */
             },
             $timeout,
             $sleep
@@ -172,7 +177,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
         return $this->wait(
             function () use ($jsSnippet, $parent) {
                 return $parent->getHelperCommon()->getEval($jsSnippet);
-                /* @var $parent Menta_Component_Helper_Wait */
+                /* @var $parent Wait */
             },
             $timeout,
             $sleep
@@ -194,7 +199,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
         return $this->wait(
             function () use ($locator, $parent) {
                 return $parent->getHelperCommon()->isVisible($locator);
-                /* @var $parent Menta_Component_Helper_Wait */
+                /* @var $parent Wait */
             },
             $timeout,
             $sleep
@@ -216,7 +221,7 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract
         return $this->wait(
             function () use ($locator, $parent) {
                 return !$parent->getHelperCommon()->isVisible($locator);
-                /* @var $parent Menta_Component_Helper_Wait */
+                /* @var $parent Wait */
             },
             $timeout,
             $sleep

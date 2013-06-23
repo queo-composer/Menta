@@ -1,11 +1,16 @@
 <?php
+
+namespace Menta\Component\Helper;
+
+use Menta\Component\AbstractComponentTest;
+
 /**
  * Assert helper
  *
  * @author Fabrizio Branca
  * @since 2011-11-18
  */
-class Menta_Component_Helper_Assert extends Menta_Component_AbstractTest
+class Assert extends AbstractComponentTest
 {
 
     /**

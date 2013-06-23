@@ -1,10 +1,11 @@
 <?php
 
+namespace Menta;
 
 /**
  * Global session manager for connections to the Selenium 2 server
  */
-class Menta_SessionManager
+class SessionManager
 {
 
     /**
@@ -63,7 +64,7 @@ class Menta_SessionManager
     {
         if (is_null(self::$webdriver)) {
             if (empty(self::$serverUrl)) {
-                throw new Exception('No serverUrl set. Call Menta_SessionManager::init() to configure first');
+                throw new Exception('No serverUrl set. Call SessionManager::init() to configure first');
             }
             self::$webdriver = new \WebDriver\WebDriver(self::$serverUrl);
         }
@@ -138,10 +139,10 @@ class Menta_SessionManager
     public static function closeSession()
     {
         if (self::activeSessionExists()) {
-            Menta_Events::dispatchEvent('before_session_close', array('session' => self::$session));
+            Events::dispatchEvent('before_session_close', array('session' => self::$session));
             self::$session->close();
             self::$session = null;
-            Menta_Events::dispatchEvent('after_session_close');
+            Events::dispatchEvent('after_session_close');
         }
     }
 

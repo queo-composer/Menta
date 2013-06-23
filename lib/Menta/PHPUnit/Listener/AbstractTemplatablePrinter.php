@@ -1,4 +1,9 @@
 <?php
+
+namespace Menta\PHPUnit\Listener;
+
+use Menta\Util\View;
+
 require_once 'PHPUnit/Framework/TestListener.php';
 
 /**
@@ -6,7 +11,7 @@ require_once 'PHPUnit/Framework/TestListener.php';
  *
  * @author Fabrizio Branca
  */
-abstract class Menta_PHPUnit_Listener_AbstractTemplatablePrinter extends PHPUnit_Util_Printer
+abstract class AbstractTemplatablePrinter extends PHPUnit_Util_Printer
 {
 
     /**
@@ -27,7 +32,7 @@ abstract class Menta_PHPUnit_Listener_AbstractTemplatablePrinter extends PHPUnit
     /**
      * @var string
      */
-    protected $viewClass = 'Menta_Util_View';
+    protected $viewClass = 'View';
 
     /**
      * Constructor
@@ -103,9 +108,9 @@ abstract class Menta_PHPUnit_Listener_AbstractTemplatablePrinter extends PHPUnit
 
         $className = $this->viewClass;
         $view = new $className($this->templateFile);
-        /* @var $view Menta_Util_View */
-        if (!$view instanceof Menta_Util_View) {
-            throw new Exception('View must inherit from Menta_Util_View.');
+        /** @var $view View */
+        if (!$view instanceof View) {
+            throw new Exception('View must inherit from View.');
         }
         foreach ($templateVars as $key => $value) {
             $view->assign($key, $value);

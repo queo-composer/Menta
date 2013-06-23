@@ -1,9 +1,11 @@
 <?php
 
+namespace Menta\Util;
+
 /**
  * Screenshot
  */
-class Menta_Util_Screenshot
+class Screenshot
 {
 
     const TYPE_INFO = 'info';
@@ -13,7 +15,7 @@ class Menta_Util_Screenshot
 
     protected $trace;
 
-    protected $type = Menta_Util_Screenshot::TYPE_INFO;
+    protected $type = Screenshot::TYPE_INFO;
 
     protected $title;
 

@@ -1,4 +1,7 @@
 <?php
+
+namespace Menta\PHPUnit\Listener;
+
 /**
  * Verbose result printer
  *

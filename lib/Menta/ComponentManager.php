@@ -1,11 +1,14 @@
 <?php
+
+namespace Menta;
+
 /**
  * ComponentManager
  *
  * @author Fabrizio Branca
  * @since 2011-11-24
  */
-class Menta_ComponentManager
+class ComponentManager
 {
 
     /**
@@ -84,15 +87,15 @@ class Menta_ComponentManager
                 'component' => self::$components[$component][$instanceKey],
                 'instanceKey' => $instanceKey
             );
-            Menta_Events::dispatchEvent('after_component_create', $eventParamaters);
-            Menta_Events::dispatchEvent('after_component_create_' . $component, $eventParamaters);
+            Events::dispatchEvent('after_component_create', $eventParamaters);
+            Events::dispatchEvent('after_component_create_' . $component, $eventParamaters);
         }
         $eventParamaters = array(
             'component' => self::$components[$component][$instanceKey],
             'instanceKey' => $instanceKey
         );
-        Menta_Events::dispatchEvent('before_component_get', $eventParamaters);
-        Menta_Events::dispatchEvent('before_component_get_' . $component, $eventParamaters);
+        Events::dispatchEvent('before_component_get', $eventParamaters);
+        Events::dispatchEvent('before_component_get_' . $component, $eventParamaters);
         return self::$components[$component][$instanceKey];
     }
 

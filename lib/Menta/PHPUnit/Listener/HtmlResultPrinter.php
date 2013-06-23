@@ -1,11 +1,16 @@
 <?php
+
+namespace Menta\PHPUnit\Listener;
+
+use Menta\ScreenshotInterface;
+
 /**
  * HTML result printer
  *
  * @author Fabrizio Branca
  * @since 2011-11-13
  */
-class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_AbstractTemplatablePrinter implements PHPUnit_Framework_TestListener
+class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Framework_TestListener
 {
 
     /**
@@ -30,7 +35,7 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
 
     protected $count = array();
 
-    protected $viewClass = 'Menta_PHPUnit_Listener_Resources_HtmlResultView';
+    protected $viewClass = 'HtmlResultView';
 
     public function startTest(PHPUnit_Framework_Test $test)
     {
@@ -106,8 +111,8 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
             'description' => $this->getDocComment($test),
         );
 
-        if ($test instanceof Menta_Interface_ScreenshotTestcase) {
-            /* @var $test Menta_Interface_ScreenshotTestcase */
+        if ($test instanceof ScreenshotInterface) {
+            /** @var $test ScreenshotInterface */
             $screenshots = $test->getScreenshots();
             if (is_array($screenshots) && count($screenshots) > 0) {
                 $result['screenshots'] = $screenshots;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Menta\Component;
+
 /**
  * Facade for methods that were available in PHPUnit_Extensions_SeleniumTestCase.
  * This component is intendet to be used from the magic __call() method of the
@@ -11,7 +13,7 @@
  *
  * @throws Exception
  */
-class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest
+class Selenium1Facade extends AbstractComponentTest
 {
 
     /**
@@ -246,7 +248,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest
     public function getBrowserUrl()
     {
         if (empty($this->browserUrl)) {
-            // $this->browserUrl = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
+            // $this->browserUrl = ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
             throw new Exception('browserUrl has not been set.');
         }
         return $this->browserUrl;

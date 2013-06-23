@@ -1,9 +1,11 @@
 <?php
 
+namespace Menta\Util;
+
 /**
  * Div static methods
  */
-class Menta_Util_Div
+class Div
 {
 
     /**

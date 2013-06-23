@@ -1,11 +1,13 @@
 <?php
 
+namespace Menta\Util;
+
 /**
  * Static test suite.
  *
  * @author Fabrizio Branca
  */
-class Menta_Util_CreateTestSuite
+class CreateTestSuite
 {
 
     /**

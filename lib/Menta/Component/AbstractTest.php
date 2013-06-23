@@ -1,11 +1,14 @@
 <?php
+
+namespace Menta\Component;
+
 /**
  * Abstract component class for components that need access to the current PHPUnit testcase
  *
  * @author Fabrizio Branca
  * @since 2011-11-24
  */
-abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract
+abstract class AbstractComponentTest extends Menta_Component_Abstract
 {
 
     /**
@@ -17,7 +20,7 @@ abstract class Menta_Component_AbstractTest extends Menta_Component_Abstract
      * Set test object
      *
      * @param PHPUnit_Framework_TestCase $test
-     * @return Menta_Component_AbstractTest
+     * @return AbstractComponentTest
      */
     public function setTest(PHPUnit_Framework_TestCase $test)
     {

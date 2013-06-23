@@ -1,15 +1,17 @@
 <?php
 
+namespace Menta;
+
 /**
  * Configuration to get the config from xml files
  *
  * @author Fabrizio Branca
  */
-class Menta_ConfigurationPhpUnitVars implements Menta_Interface_Configuration
+class ConfigurationPhpUnitVars implements Menta_Interface_Configuration
 {
 
     /**
-     * @var Menta_ConfigurationPhpUnitVars
+     * @var ConfigurationPhpUnitVars
      */
     protected static $instance;
 
@@ -35,12 +37,12 @@ class Menta_ConfigurationPhpUnitVars implements Menta_Interface_Configuration
     /**
      * Get singleton instance
      *
-     * @return Menta_ConfigurationPhpUnitVars
+     * @return ConfigurationPhpUnitVars
      */
     public static function getInstance()
     {
         if (is_null(self::$instance)) {
-            self::$instance = new Menta_ConfigurationPhpUnitVars();
+            self::$instance = new ConfigurationPhpUnitVars();
         }
         return self::$instance;
     }

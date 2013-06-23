@@ -1,11 +1,14 @@
 <?php
+
+namespace Menta;
+
 /**
  * Simple event observer implementation
  *
  * @author Fabrizio Branca
  * @since 2011-11-24
  */
-class Menta_Events
+class Events
 {
 
     /**
