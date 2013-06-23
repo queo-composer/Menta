@@ -5,164 +5,180 @@
  * @author Fabrizio Branca
  * @since 2011-11-13
  */
-class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_AbstractTemplatablePrinter implements PHPUnit_Framework_TestListener {
+class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_AbstractTemplatablePrinter implements PHPUnit_Framework_TestListener
+{
 
-	/**
-	 * @var string
-	 */
-	protected $templateFile = '###MENTA_ROOTDIR###/PHPUnit/Listener/Resources/Templates/HtmlResultTemplate.php';
+    /**
+     * @var string
+     */
+    protected $templateFile = '###MENTA_ROOTDIR###/PHPUnit/Listener/Resources/Templates/HtmlResultTemplate.php';
 
-	/**
-	 * @var array
-	 */
-	protected $additionalFiles = array();
+    /**
+     * @var array
+     */
+    protected $additionalFiles = array();
 
-	protected $lastResult;
+    protected $lastResult;
 
-	protected $lastStatus;
+    protected $lastStatus;
 
-	protected $level = 0;
+    protected $level = 0;
 
-	protected $suiteStack = array();
+    protected $suiteStack = array();
 
-	protected $results = array();
+    protected $results = array();
 
-	protected $count = array();
+    protected $count = array();
 
-	protected $viewClass = 'Menta_PHPUnit_Listener_Resources_HtmlResultView';
+    protected $viewClass = 'Menta_PHPUnit_Listener_Resources_HtmlResultView';
 
-	public function startTest(PHPUnit_Framework_Test $test) {}
+    public function startTest(PHPUnit_Framework_Test $test)
+    {
+    }
 
-	public function addError(PHPUnit_Framework_Test $test, Exception $e, $time) {
-		$this->lastResult = $e;
-		$this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_ERROR;
-	}
-	public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time) {
-		$this->lastResult = $e;
-		$this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE;
-	}
-	public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time) {
-		$this->lastResult = $e;
-		$this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE;
-	}
-	public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time) {
-		$this->lastResult = $e;
-		$this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED;
-	}
+    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
+    {
+        $this->lastResult = $e;
+        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_ERROR;
+    }
 
-	public function getDocComment(PHPUnit_Framework_Test $test) {
-		$class = new ReflectionClass($test);
-		$method = $class->getMethod($test->getName(false));
-		$docComment = $method->getDocComment();
-		$docComment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#', '$1', $docComment);
-		$docComment - "\n".$docComment;
-		$endOfDescription = strpos($docComment, "\n@");
-		if ($endOfDescription !== false) {
-			$docComment = substr($docComment, 0, $endOfDescription);
-		}
-		$docComment = trim($docComment);
-		return $docComment;
-	}
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    {
+        $this->lastResult = $e;
+        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE;
+    }
 
-	public function endTest(PHPUnit_Framework_Test $test, $time) {
+    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    {
+        $this->lastResult = $e;
+        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE;
+    }
 
-		$testName = PHPUnit_Util_Test::describe($test);
+    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    {
+        $this->lastResult = $e;
+        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED;
+    }
 
-		// store in result array
-		$currentArray =& $this->results;
-		foreach ($this->suiteStack as $suiteName) {
-			$colonPos = strpos($suiteName, ': ');
-			if ($colonPos !== false) {
-				$browser = substr($suiteName, $colonPos+2);
-				$suiteName = substr($suiteName, 0, $colonPos);
-				// $currentArray =& $currentArray['__suites'][$suiteName]['__browsers'][$browser];
-				$currentArray =& $currentArray['__browsers'][$browser];
-			} else {
-				$currentArray =& $currentArray['__suites'][$suiteName];
-			}
-		}
+    public function getDocComment(PHPUnit_Framework_Test $test)
+    {
+        $class = new ReflectionClass($test);
+        $method = $class->getMethod($test->getName(false));
+        $docComment = $method->getDocComment();
+        $docComment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#', '$1', $docComment);
+        $docComment - "\n" . $docComment;
+        $endOfDescription = strpos($docComment, "\n@");
+        if ($endOfDescription !== false) {
+            $docComment = substr($docComment, 0, $endOfDescription);
+        }
+        $docComment = trim($docComment);
+        return $docComment;
+    }
 
-		if (is_null($this->lastStatus)) {
-			$this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_PASSED;
-		}
+    public function endTest(PHPUnit_Framework_Test $test, $time)
+    {
 
-		$result = array(
-			'testName' => $testName,
-			'time' => $time,
-			'exception' => $this->lastResult,
-			'status' => $this->lastStatus,
-			'description' => $this->getDocComment($test),
-		);
+        $testName = PHPUnit_Util_Test::describe($test);
 
-		if ($test instanceof Menta_Interface_ScreenshotTestcase) { /* @var $test Menta_Interface_ScreenshotTestcase */
-			$screenshots = $test->getScreenshots();
-			if (is_array($screenshots) && count($screenshots) > 0) {
-				$result['screenshots'] = $screenshots;
-			}
-		}
+        // store in result array
+        $currentArray =& $this->results;
+        foreach ($this->suiteStack as $suiteName) {
+            $colonPos = strpos($suiteName, ': ');
+            if ($colonPos !== false) {
+                $browser = substr($suiteName, $colonPos + 2);
+                $suiteName = substr($suiteName, 0, $colonPos);
+                // $currentArray =& $currentArray['__suites'][$suiteName]['__browsers'][$browser];
+                $currentArray =& $currentArray['__browsers'][$browser];
+            } else {
+                $currentArray =& $currentArray['__suites'][$suiteName];
+            }
+        }
 
-		if (method_exists($test, 'getInfo')) {
-			$result['info'] = $test->getInfo();
-		}
+        if (is_null($this->lastStatus)) {
+            $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_PASSED;
+        }
 
-		if (isset($this->count[$this->lastStatus])) {
-			$this->count[$this->lastStatus]++;
-		} else {
-			$this->count[$this->lastStatus] = 1;
-		}
+        $result = array(
+            'testName' => $testName,
+            'time' => $time,
+            'exception' => $this->lastResult,
+            'status' => $this->lastStatus,
+            'description' => $this->getDocComment($test),
+        );
 
-		$dataSetPos = strpos($testName, ' with data set ');
-		if ($dataSetPos !== false) {
-			$dataSet = substr($testName, $dataSetPos+5);
-			$dataSet = ucfirst(trim($dataSet));
-			$testName = substr($testName, 0, $dataSetPos);
-			$currentArray['__tests']['__datasets'][$dataSet] = $result;
-		} else {
-			$currentArray['__tests'][$testName] = $result;
-		}
+        if ($test instanceof Menta_Interface_ScreenshotTestcase) {
+            /* @var $test Menta_Interface_ScreenshotTestcase */
+            $screenshots = $test->getScreenshots();
+            if (is_array($screenshots) && count($screenshots) > 0) {
+                $result['screenshots'] = $screenshots;
+            }
+        }
 
-		$this->lastResult = NULL;
-		$this->lastStatus = NULL;
-	}
+        if (method_exists($test, 'getInfo')) {
+            $result['info'] = $test->getInfo();
+        }
 
-	public function startTestSuite(PHPUnit_Framework_TestSuite $suite) {
-		$this->level++;
-		$name = PHPUnit_Util_Test::describe($suite);
-		if (empty($name)) {
-			//$name = get_class($suite);
-			$name = '-';
-		}
-		$this->suiteStack[] = $name;
-	}
+        if (isset($this->count[$this->lastStatus])) {
+            $this->count[$this->lastStatus]++;
+        } else {
+            $this->count[$this->lastStatus] = 1;
+        }
 
-	public function endTestSuite(PHPUnit_Framework_TestSuite $suite) {
-		$this->level--;
-		array_pop($this->suiteStack);
-	}
+        $dataSetPos = strpos($testName, ' with data set ');
+        if ($dataSetPos !== false) {
+            $dataSet = substr($testName, $dataSetPos + 5);
+            $dataSet = ucfirst(trim($dataSet));
+            $testName = substr($testName, 0, $dataSetPos);
+            $currentArray['__tests']['__datasets'][$dataSet] = $result;
+        } else {
+            $currentArray['__tests'][$testName] = $result;
+        }
 
-	/**
-	 * Flush: Copy images and additional files to folder and generate index file using a template
-	 *
-	 * This method is called once after all tests have been processed.
-	 * HINT: The flush method is only called if the TestListener inherits from PHPUnit_Util_Printer
-	 *
-	 * @param array $templateVars
-	 * @return void
-	 * @author Fabrizio Branca
-	 */
-	public function flush(array $templateVars=array()) {
-		ksort($this->count);
-		$sum = array_sum($this->count);
-		$templateVars['percentages'] = array();
-		foreach($this->count as $key => $value) {
-			$templateVars['percentages'][$key] = 100 * $value/$sum;
-		}
-		$templateVars['basedir'] = dirname($this->targetFile);
-		$templateVars['results'] = $this->results;
-		$templateVars['count'] = $this->count;
+        $this->lastResult = null;
+        $this->lastStatus = null;
+    }
 
-		return parent::flush($templateVars);
-	}
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+        $this->level++;
+        $name = PHPUnit_Util_Test::describe($suite);
+        if (empty($name)) {
+            //$name = get_class($suite);
+            $name = '-';
+        }
+        $this->suiteStack[] = $name;
+    }
+
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
+        $this->level--;
+        array_pop($this->suiteStack);
+    }
+
+    /**
+     * Flush: Copy images and additional files to folder and generate index file using a template
+     *
+     * This method is called once after all tests have been processed.
+     * HINT: The flush method is only called if the TestListener inherits from PHPUnit_Util_Printer
+     *
+     * @param array $templateVars
+     * @return void
+     * @author Fabrizio Branca
+     */
+    public function flush(array $templateVars = array())
+    {
+        ksort($this->count);
+        $sum = array_sum($this->count);
+        $templateVars['percentages'] = array();
+        foreach ($this->count as $key => $value) {
+            $templateVars['percentages'][$key] = 100 * $value / $sum;
+        }
+        $templateVars['basedir'] = dirname($this->targetFile);
+        $templateVars['results'] = $this->results;
+        $templateVars['count'] = $this->count;
+
+        return parent::flush($templateVars);
+    }
 
 }
 
