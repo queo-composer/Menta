@@ -135,7 +135,7 @@ abstract class Selenium2Testcase extends \PHPUnit_Framework_TestCase implements 
      * @param Exception $e
      * @return void
      */
-    protected function onNotSuccessfulTest(Exception $e)
+    protected function onNotSuccessfulTest(\Exception $e)
     {
         if ($this->captureScreenshotOnFailure) {
             try {
@@ -207,8 +207,8 @@ abstract class Selenium2Testcase extends \PHPUnit_Framework_TestCase implements 
 
         $time = time();
 
-        $screenshotHelper = ComponentManager::get('Screenshot');
-        /* @var $screenshotHelper _Helper_ScreenshotComponent */
+        $screenshotHelper = ComponentManager::get('Menta\Component\Helper\Screenshot');
+        /* @var $screenshotHelper Menta\Component\Helper\Screenshot */
         $base64Image = $screenshotHelper->takeScreenshotToString();
 
         // put data into the screenshot object
