@@ -97,7 +97,7 @@ abstract class Selenium1TestCase extends Selenium2Testcase
     public function getSelenium1Facade()
     {
         if (is_null($this->selenium1Facade)) {
-            $this->selenium1Facade = ComponentManager::get('Selenium1Facade');
+            $this->selenium1Facade = ComponentManager::get('Menta\Component\Selenium1Facade');
             $this->selenium1Facade->setTest($this);
         }
         return $this->selenium1Facade;

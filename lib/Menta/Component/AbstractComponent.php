@@ -117,7 +117,7 @@ abstract class AbstractComponent implements ComponentInterface
      */
     public function getHelperCommon()
     {
-        return ComponentManager::get('Common');
+        return ComponentManager::get('Menta\Component\Helper\Common');
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class AbstractComponent implements ComponentInterface
      */
     public function getHelperAssert()
     {
-        return ComponentManager::get('Assert');
+        return ComponentManager::get('Menta\Component\Helper\Assert');
     }
 
     /**
@@ -137,6 +137,6 @@ abstract class AbstractComponent implements ComponentInterface
      */
     protected function getHelperWait()
     {
-        return ComponentManager::get('Wait');
+        return ComponentManager::get('Menta\Component\Helper\Wait');
     }
 }
