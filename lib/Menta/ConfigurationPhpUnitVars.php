@@ -7,7 +7,7 @@ namespace Menta;
  *
  * @author Fabrizio Branca
  */
-class ConfigurationPhpUnitVars implements Menta_Interface_Configuration
+class ConfigurationPhpUnitVars implements ConfigurationInterface
 {
 
     /**
@@ -29,7 +29,7 @@ class ConfigurationPhpUnitVars implements Menta_Interface_Configuration
     public static function addConfigurationFile($configurationFile)
     {
         if (!is_file($configurationFile)) {
-            throw new InvalidArgumentException("Could not find file '$configurationFile'");
+            throw new \InvalidArgumentException("Could not find file '$configurationFile'");
         }
         self::$configurationFiles[] = $configurationFile;
     }
@@ -60,7 +60,7 @@ class ConfigurationPhpUnitVars implements Menta_Interface_Configuration
             $this->loadDefaults();
         }
         if (!$this->issetKey($key)) {
-            throw new Exception(sprintf('Could not find configuration key "%s"', $key));
+            throw new \Exception(sprintf('Could not find configuration key "%s"', $key));
         }
 
         // json decoding if possible
@@ -108,5 +108,4 @@ class ConfigurationPhpUnitVars implements Menta_Interface_Configuration
         // be restored this information also gets lost and will trigger reloading of the defaults
         $GLOBALS[__CLASS__ . '_defaultsLoaded'] = true;
     }
-
 }

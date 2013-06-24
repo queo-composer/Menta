@@ -12,7 +12,6 @@ use Menta\Component\AbstractComponent;
  */
 class Screenshot extends AbstractComponent
 {
-
     /**
      * take screenshot
      *
@@ -23,6 +22,4 @@ class Screenshot extends AbstractComponent
         $base64Image = $this->getSession()->screenshot();
         return $base64Image;
     }
-
 }
-

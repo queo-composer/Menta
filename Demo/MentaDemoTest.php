@@ -17,14 +17,14 @@ require_once dirname(__FILE__) . '/bootstrap.php';
  * @author Fabrizio Branca
  * @since 2011-11-24
  */
-class MentaDemoTest extends PHPUnit_Framework_TestCase
+class MentaDemoTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testDemo()
     {
         $session = SessionManager::getSession();
-        $session->open('http://www.google.com/ncr');
-        $input = $session->element(LocatorStrategy::ID, 'lst-ib');
+        $session->open('http://www.google.com/');
+        $input = $session->element(LocatorStrategy::NAME, 'q');
         $input->value(array('value' => array('Fabrizio Branca')));
         $input->value(array('value' => array(Key::RETURN_KEY)));
         SessionManager::closeSession();
@@ -33,11 +33,10 @@ class MentaDemoTest extends PHPUnit_Framework_TestCase
     public function testTitle()
     {
         $session = SessionManager::getSession();
-        $session->open('http://www.google.com/ncr');
+        $session->open('http://www.google.com/');
         /** @var $assertHelper Assert */
-        $assertHelper = ComponentManager::get('Assert');
+        $assertHelper = ComponentManager::get('Menta\Component\Helper\Assert');
         $assertHelper->setTest($this)->assertTitle('Google');
         SessionManager::closeSession();
     }
-
 }

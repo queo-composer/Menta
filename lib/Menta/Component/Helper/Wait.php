@@ -255,5 +255,4 @@ class Wait extends AbstractComponent
     {
         return $this->waitForElementNotVisible($locator, $timeout, $sleep);
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Menta;
+
 /**
  * Interface for components
  *
@@ -9,5 +10,4 @@ namespace Menta;
  */
 interface ComponentInterface
 {
-
 }

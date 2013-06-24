@@ -30,13 +30,13 @@ class ComponentManager
     public static function addRewrite($originalClassname, $targetClassname)
     {
         if (empty($originalClassname) || !is_string($originalClassname)) {
-            throw new InvalidArgumentException('Invalid originalClassname');
+            throw new \InvalidArgumentException('Invalid originalClassname');
         }
         if (empty($targetClassname) || !is_string($targetClassname)) {
-            throw new InvalidArgumentException('Invalid targetClassname');
+            throw new \InvalidArgumentException('Invalid targetClassname');
         }
         if (isset(self::$rewrites[$originalClassname])) {
-            throw new Exception("Rewrite for '$originalClassname'' already exists.");
+            throw new \Exception("Rewrite for '$originalClassname'' already exists.");
         }
         self::$rewrites[$originalClassname] = $targetClassname;
     }
@@ -53,10 +53,10 @@ class ComponentManager
     public static function get($component, $instanceKey = 'default')
     {
         if (empty($component) || !is_string($component)) {
-            throw new InvalidArgumentException('Parameter "component" must be a classname');
+            throw new \InvalidArgumentException('Parameter "component" must be a classname');
         }
         if (empty($instanceKey) || !is_string($instanceKey)) {
-            throw new InvalidArgumentException('Parameter "instanceKey" must be a non empty string');
+            throw new \InvalidArgumentException('Parameter "instanceKey" must be a non empty string');
         }
 
         $originalComponentClass = $component;
@@ -71,15 +71,15 @@ class ComponentManager
         }
         if (!isset(self::$components[$component][$instanceKey])) {
             if (!class_exists($component)) {
-                throw new Exception('Could not find component ' . $component);
+                throw new \Exception('Could not find component ' . $component);
             }
             self::$components[$component][$instanceKey] = new $component();
-            if (!self::$components[$component][$instanceKey] instanceof Menta_Interface_Component) {
-                throw new Exception("Component '$component' does not implement interface 'Menta_Interfaces_Component'");
+            if (!self::$components[$component][$instanceKey] instanceof ComponentInterface) {
+                throw new \Exception("Component '$component' does not implement interface 'Menta_Interfaces_Component'");
             }
 
             if ($originalComponentClass != $component && !self::$components[$component][$instanceKey] instanceof $originalComponentClass) {
-                throw new Exception("Rewrite '$component' does not extend original class '$originalComponentClass'");
+                throw new \Exception("Rewrite '$component' does not extend original class '$originalComponentClass'");
             }
 
             // fire events
@@ -98,5 +98,4 @@ class ComponentManager
         Events::dispatchEvent('before_component_get_' . $component, $eventParamaters);
         return self::$components[$component][$instanceKey];
     }
-
 }

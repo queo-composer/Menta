@@ -91,7 +91,8 @@ class Assert extends AbstractComponentTest
     public function assertElementNotPresent($element, $message = '', $implictWait = false)
     {
 
-        if (!$implictWait && $this->getConfiguration() && $this->getConfiguration()->issetKey(
+        if (!$implictWait && $this->getConfiguration()
+            && $this->getConfiguration()->issetKey(
                 'testing.selenium.timeoutImplicitWait'
             )
         ) {
@@ -206,6 +207,4 @@ class Assert extends AbstractComponentTest
         $attribute = $this->getHelperCommon()->getElement($element)->attribute('checked');
         $this->getTest()->assertNull($attribute, $message);
     }
-
 }
-

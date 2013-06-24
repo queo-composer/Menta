@@ -19,7 +19,7 @@ class Bootstrap
     public static function init()
     {
 
-        define('MENTA_ROOTDIR', dirname(__FILE__));
+        define('MENTA_ROOTDIR', __DIR__);
 
         // Provide configuration object to all components
         Events::addObserver(

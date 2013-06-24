@@ -2,6 +2,9 @@
 
 namespace Menta;
 
+use WebDriver\Session;
+use WebDriver\WebDriver;
+
 /**
  * Global session manager for connections to the Selenium 2 server
  */
@@ -9,12 +12,12 @@ class SessionManager
 {
 
     /**
-     * @var \WebDriver\Session
+     * @var Session
      */
     protected static $session;
 
     /**
-     * @var \WebDriver\WebDriver
+     * @var WebDriver
      */
     protected static $webdriver;
 
@@ -58,7 +61,7 @@ class SessionManager
 
     /**
      * @static
-     * @return \WebDriver\WebDriver
+     * @return WebDriver
      */
     public static function getWebdriver()
     {
@@ -66,7 +69,7 @@ class SessionManager
             if (empty(self::$serverUrl)) {
                 throw new Exception('No serverUrl set. Call SessionManager::init() to configure first');
             }
-            self::$webdriver = new \WebDriver\WebDriver(self::$serverUrl);
+            self::$webdriver = new WebDriver(self::$serverUrl);
         }
         return self::$webdriver;
     }
@@ -74,7 +77,7 @@ class SessionManager
     /**
      * @param bool $forceNew
      * @static
-     * @return \WebDriver\Session
+     * @return Session
      */
     public static function getSession($forceNew = false)
     {
@@ -83,10 +86,10 @@ class SessionManager
         }
         if (is_null(self::$session)) {
             self::$session = self::getWebdriver()->session(self::$browser, self::$additionalCapabilities);
-            if (!self::$session instanceof \WebDriver\Session) {
-                throw new Exception('Error while creating new session');
+            if (!self::$session instanceof Session) {
+                throw new \Exception('Error while creating new session');
             }
-            Menta_Events::dispatchEvent(
+            Events::dispatchEvent(
                 'after_session_create',
                 array(
                     'session' => self::$session,
@@ -105,13 +108,13 @@ class SessionManager
      * @throws Exception
      * @return string
      */
-    public static function getSessionId(\WebDriver\Session $session = null)
+    public static function getSessionId(Session $session = null)
     {
         if (is_null($session)) {
             if (self::activeSessionExists()) {
                 $session = self::getSession();
             } else {
-                throw new Exception('No session given and no active session found');
+                throw new \Exception('No session given and no active session found');
             }
         }
         // the session id is the last part of the url
@@ -127,7 +130,7 @@ class SessionManager
      */
     public static function activeSessionExists()
     {
-        return (self::$session instanceof \WebDriver\Session);
+        return (self::$session instanceof Session);
     }
 
     /**

@@ -1,13 +1,19 @@
 <?php
 
 namespace Menta\Component;
+
+use Menta\ComponentInterface;
+use Menta\ComponentManager;
+use Menta\ConfigurationInterface;
+use Menta\SessionManager;
+
 /**
  * Abstract component class
  *
  * @author Fabrizio Branca
  * @since 2011-11-24
  */
-abstract class AbstractComponent implements Menta_Interface_Component
+abstract class AbstractComponent implements ComponentInterface
 {
 
     /**
@@ -28,11 +34,13 @@ abstract class AbstractComponent implements Menta_Interface_Component
     {
         // check if we got constructed inside the component manager
         $trace = debug_backtrace(false);
-        if ($trace[1]['class'] != 'ComponentManager' && $trace[1]['function'] != '__construct') {
-            throw new Exception(sprintf(
-                'Use "ComponentManager::get(\'%1$s\')" instead of "new %1$s()" to get an instance of this component.',
-                get_class($this)
-            ));
+        if ($trace[1]['class'] != 'Menta\ComponentManager' && $trace[1]['function'] != '__construct') {
+            throw new \Exception(
+                sprintf(
+                    'Use "ComponentManager::get(\'%1$s\')" instead of "new %1$s()" to get an instance of this component.',
+                    get_class($this)
+                )
+            );
         }
         $this->loadTranslation();
     }
@@ -69,7 +77,7 @@ abstract class AbstractComponent implements Menta_Interface_Component
      */
     public function getSession()
     {
-        return Menta_SessionManager::getSession();
+        return SessionManager::getSession();
     }
 
     /**
@@ -78,7 +86,7 @@ abstract class AbstractComponent implements Menta_Interface_Component
      * @param Menta_Interface_Configuration $configuration
      * @return AbstractComponent
      */
-    public function setConfiguration(Menta_Interface_Configuration $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
         return $this;
@@ -116,7 +124,7 @@ abstract class AbstractComponent implements Menta_Interface_Component
      */
     public function getHelperAssert()
     {
-        return Menta_ComponentManager::get('Assert');
+        return ComponentManager::get('Assert');
     }
 
     /**
@@ -126,7 +134,6 @@ abstract class AbstractComponent implements Menta_Interface_Component
      */
     protected function getHelperWait()
     {
-        return Menta_ComponentManager::get('Wait');
+        return ComponentManager::get('Wait');
     }
-
 }

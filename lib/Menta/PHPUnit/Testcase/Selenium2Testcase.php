@@ -20,7 +20,7 @@ use Menta\Util\Screenshot;
  * @author Fabrizio Branca
  * @since 2011-11-18
  */
-abstract class Selenium2Testcase extends PHPUnit_Framework_TestCase implements ScreenshotInterface
+abstract class Selenium2Testcase extends \PHPUnit_Framework_TestCase implements ScreenshotInterface
 {
 
     /**
@@ -103,7 +103,7 @@ abstract class Selenium2Testcase extends PHPUnit_Framework_TestCase implements S
                 Menta_SessionManager::closeSession();
             } elseif ($this->cleanupPreviousSession) {
                 // Deleting all cookies to cleanup any previous application session state
-                Menta_SessionManager::getSession()->deleteAllCookies();
+                SessionManager::getSession()->deleteAllCookies();
             }
         }
         parent::setUp();
@@ -120,7 +120,7 @@ abstract class Selenium2Testcase extends PHPUnit_Framework_TestCase implements S
     public function getSession($forceNew = false)
     {
         try {
-            return Menta_SessionManager::getSession($forceNew);
+            return SessionManager::getSession($forceNew);
         } catch (\WebDriver\Exception $e) {
             $this->markTestSkipped($e->getMessage()); // couldn't connect to host
         }
@@ -140,13 +140,13 @@ abstract class Selenium2Testcase extends PHPUnit_Framework_TestCase implements S
             try {
                 $this->takeScreenshot(
                     get_class($e),
-                    PHPUnit_Framework_TestFailure::exceptionToString($e),
-                    Menta_Util_Screenshot::TYPE_ERROR,
+                    \PHPUnit_Framework_TestFailure::exceptionToString($e),
+                    Screenshot::TYPE_ERROR,
                     $e->getTrace()
                 );
-            } catch (Exception $screenshotException) {
+            } catch (\Exception $screenshotException) {
                 // if there's an exception while taking a screenshot because a test was not successful. That's bad luck :)
-                throw new PHPUnit_Framework_SyntheticError(
+                throw new \PHPUnit_Framework_SyntheticError(
                     $e->getMessage() . ' (AND: Exception while taking screenshot: ' . $screenshotException->getMessage(
                     ) . ')',
                     $e->getCode(),

@@ -115,11 +115,10 @@ abstract class Selenium1TestCase extends Selenium2Testcase
     {
         // file_put_contents('debug.txt', var_export($command, 1) ."\n", FILE_APPEND);
         if (!method_exists($this->getSelenium1Facade(), $command)) {
-            throw new Exception("Command $command is not implemented in the selenium1 api wrapper class");
+            throw new \Exception("Command $command is not implemented in the selenium1 api wrapper class");
         }
 
         $result = call_user_func_array(array($this->getSelenium1Facade(), $command), $arguments);
         return $result;
     }
-
 }

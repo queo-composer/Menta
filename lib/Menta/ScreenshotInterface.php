@@ -1,6 +1,7 @@
 <?php
 
 namespace Menta;
+
 /**
  * Interface for testcase that can take screenshots
  *
@@ -20,13 +21,12 @@ interface ScreenshotInterface
      * @param array $trace
      * @return return Screenshot
      */
-    function takeScreenshot($title = null, $description = null, $type = null, array $trace = null);
+    public function takeScreenshot($title = null, $description = null, $type = null, array $trace = null);
 
     /**
      * Get all screenshots that were taken so far
      *
      * @return array array of Screenshot
      */
-    function getScreenshots();
-
+    public function getScreenshots();
 }

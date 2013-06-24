@@ -28,10 +28,10 @@ class Events
     public static function addObserver($eventKey, $observer)
     {
         if (!is_string($eventKey) || empty($eventKey)) {
-            throw new InvalidArgumentException("Parameter 'eventKey' must be a non empty string");
+            throw new \InvalidArgumentException("Parameter 'eventKey' must be a non empty string");
         }
         if (!is_callable($observer)) {
-            throw new InvalidArgumentException("Parameter 'observer' must be a valid callback");
+            throw new \InvalidArgumentException("Parameter 'observer' must be a valid callback");
         }
         if (!isset(self::$observers[$eventKey])) {
             self::$observers[$eventKey] = array();
@@ -51,7 +51,7 @@ class Events
     public static function dispatchEvent($eventKey, array $parameters = array())
     {
         if (!is_string($eventKey) || empty($eventKey)) {
-            throw new InvalidArgumentException("Parameter 'eventKey' must be a non empty string");
+            throw new \InvalidArgumentException("Parameter 'eventKey' must be a non empty string");
         }
         if (isset(self::$observers[$eventKey])) {
             foreach (self::$observers[$eventKey] as $observer) {
@@ -60,5 +60,4 @@ class Events
             }
         }
     }
-
 }

@@ -4,8 +4,8 @@ namespace Demo;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use WebDriver\Container;
-use WebDriver\Element;
+use WebDriver\Key;
+use WebDriver\LocatorStrategy;
 use WebDriver\WebDriver;
 
 try {
@@ -21,16 +21,16 @@ try {
     $session->window('main')->postSize(array('width' => 1280, 'height' => 1024)); // size
 
     # Got to google
-    $session->open('http://www.google.com/ncr');
+    $session->open('http://www.google.com/');
 
     # Search
-    $input = $session->element(Container::ID, 'lst-ib');
+    $input = $session->element(LocatorStrategy::NAME, 'q');
     $input->value(array('value' => array('AOE media')));
-    $input->value(array('value' => array(Element::ReturnKey)));
+    $input->value(array('value' => array(Key::RETURN_KEY)));
 
     sleep(2);
 
-    $firstResult = $session->element(Container::XPATH, '//ol[@id="rso"]/li[1]//a');
+    $firstResult = $session->element(LocatorStrategy::XPATH, '//ol[@id="rso"]/li[1]//a');
     printf("Search result: %s\n", $firstResult->text());
 
     $firstResult->click();

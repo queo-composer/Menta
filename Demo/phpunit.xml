@@ -1,12 +1,16 @@
 <phpunit
-        printerClass="\Menta\PHPUnit\Listener\VerboseResultPrinter"
-        printerFile="../PHPUnit/Listener/VerboseResultPrinter.php">
+        bootstrap="bootstrap.php">
     <php>
         <var name="testing.selenium.seleniumServerUrl" value="http://localhost:4444/wd/hub"/>
         <var name="testing.selenium.browser" value="firefox"/>
     </php>
+    <testsuites>
+        <testsuite name="Integrationstests">
+            <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">.</directory>
+        </testsuite>
+    </testsuites>
     <listeners>
-        <listener class="HtmlResultPrinter" file="../PHPUnit/Listener/HtmlResultPrinter.php">
+        <listener class="HtmlResultPrinter" file="../lib/Menta/PHPUnit/Listener/HtmlResultPrinter.php">
             <arguments>
                 <string>reports/index.html</string>
                 <!-- target file -->

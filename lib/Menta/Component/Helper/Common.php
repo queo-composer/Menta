@@ -3,6 +3,10 @@
 namespace Menta\Component\Helper;
 
 use Menta\Component\AbstractComponent;
+use Menta\ConfigurationPhpUnitVars;
+use WebDriver\Element;
+use WebDriver\Key;
+use WebDriver\LocatorStrategy;
 
 /**
  * Common helper
@@ -43,7 +47,7 @@ class Common extends AbstractComponent
     public function getMainDomain()
     {
         if (is_null($this->mainDomain)) {
-            $this->mainDomain = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
+            $this->mainDomain = ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
             $this->mainDomain = rtrim($this->mainDomain, '/');
         }
         return $this->mainDomain;
@@ -76,19 +80,19 @@ class Common extends AbstractComponent
         if (is_array($locator) && isset($locator['using']) && isset($locator['value'])) {
             // already the correct element => do nothing
         } elseif (substr($locator, 0, 6) == 'xpath=') {
-            $locator = array('using' => \WebDriver\LocatorStrategy::XPATH, 'value' => substr($locator, 6));
+            $locator = array('using' => LocatorStrategy::XPATH, 'value' => substr($locator, 6));
         } elseif (strpos($locator, '/') !== false) {
-            $locator = array('using' => \WebDriver\LocatorStrategy::XPATH, 'value' => $locator);
+            $locator = array('using' => LocatorStrategy::XPATH, 'value' => $locator);
         } elseif (substr($locator, 0, 3) == 'id=') {
-            $locator = array('using' => \WebDriver\LocatorStrategy::ID, 'value' => substr($locator, 3));
+            $locator = array('using' => LocatorStrategy::ID, 'value' => substr($locator, 3));
         } elseif (substr($locator, 0, 4) == 'css=') {
-            $locator = array('using' => \WebDriver\LocatorStrategy::CSS_SELECTOR, 'value' => substr($locator, 4));
+            $locator = array('using' => LocatorStrategy::CSS_SELECTOR, 'value' => substr($locator, 4));
         } elseif (substr($locator, 0, 5) == 'link=') {
-            $locator = array('using' => \WebDriver\LocatorStrategy::LINK_TEXT, 'value' => substr($locator, 5));
+            $locator = array('using' => LocatorStrategy::LINK_TEXT, 'value' => substr($locator, 5));
         } elseif (is_string($locator)) {
-            $locator = array('using' => \WebDriver\LocatorStrategy::ID, 'value' => $locator);
+            $locator = array('using' => LocatorStrategy::ID, 'value' => $locator);
         } else {
-            throw new Exception('Could not parse locator');
+            throw new \Exception('Could not parse locator');
         }
         // TODO: auto detect other locator strategies from string
         // check http://release.seleniumhq.org/selenium-core/1.0/reference.html#locators for a complete list of Selenium 1 strategies
@@ -101,11 +105,11 @@ class Common extends AbstractComponent
      * @throws Exception
      * @param $element
      * @param $parent
-     * @return \WebDriver\Element
+     * @return Element
      */
     public function getElement($element, $parent = null)
     {
-        if ($element instanceof \WebDriver\Element) {
+        if ($element instanceof Element) {
             // already the correct element => do nothing
         } else {
             if (is_null($parent)) {
@@ -113,8 +117,8 @@ class Common extends AbstractComponent
             }
             $element = $parent->element($this->parseLocator($element));
         }
-        if (!$element instanceof \WebDriver\Element) {
-            throw new Exception("Element '$element' not found");
+        if (!$element instanceof Element) {
+            throw new \Exception("Element '$element' not found");
         }
         return $element;
     }
@@ -131,8 +135,8 @@ class Common extends AbstractComponent
             // do nothing
         } elseif (is_array($element) && isset($element['using']) && isset($element['value'])) {
             $element = $element['using'] . '=' . $element['value'];
-        } elseif ($element instanceof \WebDriver\Element) {
-            /* @var $element \WebDriver\Element */
+        } elseif ($element instanceof Element) {
+            /* @var $element Element */
             $element = $element->__toString();
         } else {
             $element = '[INVALID ELEMENT LOCATOR]';
@@ -177,7 +181,7 @@ class Common extends AbstractComponent
     /**
      * Checks if checkbox, option or radiobutton is selected
      *
-     * @param string|array|\WebDriver\Element $element
+     * @param string|array|Element $element
      * @return boolean
      */
     public function isSelected($element)
@@ -214,8 +218,8 @@ class Common extends AbstractComponent
 
         try {
             $result = $this->getSession()->execute(array('script' => $jsSnippet, 'args' => $args));
-        } catch (Exception $e) {
-            throw new Exception("Error while executing snippet '$jsSnippet'");
+        } catch (\Exception $e) {
+            throw new \Exception("Error while executing snippet '$jsSnippet'");
         }
         return $result;
     }
@@ -232,8 +236,8 @@ class Common extends AbstractComponent
      */
     public function resizeBrowserWindow($width = 1280, $height = 1024, $x = 0, $y = 0, $windowHandle = 'main')
     {
-        $this->getSession()->window($windowHandle)->position(array('x' => $x, 'y' => $y));
-        $this->getSession()->window($windowHandle)->size(array('width' => $width, 'height' => $height));
+        $this->getSession()->window($windowHandle)->postPosition(array('x' => $x, 'y' => $y));
+        $this->getSession()->window($windowHandle)->postSize(array('width' => $width, 'height' => $height));
     }
 
     /**
@@ -263,7 +267,7 @@ class Common extends AbstractComponent
     /**
      * Get text
      *
-     * @param string|array|\WebDriver\Element $element
+     * @param string|array|Element $element
      * @return string
      */
     public function getText($element)
@@ -274,7 +278,7 @@ class Common extends AbstractComponent
     /**
      * Click on an element
      *
-     * @param string|array|\WebDriver\Element $element
+     * @param string|array|Element $element
      * @return void
      */
     public function click($element)
@@ -285,7 +289,7 @@ class Common extends AbstractComponent
     /**
      * Type something into an input box
      *
-     * @param string|array|\WebDriver\Element $element
+     * @param string|array|Element $element
      * @param string $text
      * @param bool $resetContent
      * @param bool $leaveFieldAfterwards
@@ -297,14 +301,14 @@ class Common extends AbstractComponent
         if ($resetContent) {
             // got to the end, mark everything to the beginning to overwrite existing content
             $element->value(
-                array('value' => array(\WebDriver\Key::END . \WebDriver\Key::SHIFT . \WebDriver\Key::HOME . \WebDriver\Key::BACKSPACE))
+                array('value' => array(Key::END . Key::SHIFT . Key::HOME . Key::BACKSPACE))
             );
         }
         $element->value(array('value' => array((string)$text)));
         if ($leaveFieldAfterwards) {
             try {
-                $element->value(array('value' => array(\WebDriver\Key::TAB)));
-            } catch (Exception $e) {
+                $element->value(array('value' => array(Key::TAB)));
+            } catch (\Exception $e) {
                 echo $e->getMessage();
             }
         }
@@ -316,7 +320,7 @@ class Common extends AbstractComponent
      * - "value=<value>" -or-
      * - "label=<label>"
      *
-     * @param string|array|\WebDriver\Element $element
+     * @param string|array|Element $element
      * @param string $option
      * @throws Exception
      */
@@ -325,15 +329,15 @@ class Common extends AbstractComponent
         $element = $this->getElement($element);
         if (substr($option, 0, 6) == 'value=') {
             $option = substr($option, 6);
-            $option = $element->element(\WebDriver\LocatorStrategy::XPATH, 'option[@value="' . $option . '"]');
+            $option = $element->element(LocatorStrategy::XPATH, 'option[@value="' . $option . '"]');
         } elseif (substr($option, 0, 6) == 'label=') {
             $option = substr($option, 6);
             $option = $element->element(
-                \WebDriver\LocatorStrategy::XPATH,
+                LocatorStrategy::XPATH,
                 'option[normalize-space(text())="' . $option . '"]'
             );
         } else {
-            throw new Exception('Expecting label to begin with "label=" or "value="');
+            throw new \Exception('Expecting label to begin with "label=" or "value="');
         }
         $option->click();
     }
@@ -341,7 +345,7 @@ class Common extends AbstractComponent
     /**
      * Get selected label
      *
-     * @param string|array|\WebDriver\Element $element
+     * @param string|array|Element $element
      * @return bool|string
      */
     public function getSelectedLabel($element)
@@ -357,7 +361,7 @@ class Common extends AbstractComponent
     /**
      * Get selected value
      *
-     * @param string|array|\WebDriver\Element $element
+     * @param string|array|Element $element
      * @return bool|string
      */
     public function getSelectedValue($element)
@@ -365,7 +369,7 @@ class Common extends AbstractComponent
         $label = false;
         $firstSelectedOption = $this->getFirstSelectedOption($element);
         if ($firstSelectedOption !== false) {
-            /* @var $firstSelectedOption \Webdriver\Element */
+            /* @var $firstSelectedOption Element */
             $label = $firstSelectedOption->getAttribute('value');
         }
         return $label;
@@ -374,15 +378,15 @@ class Common extends AbstractComponent
     /**
      * Get first selected option
      *
-     * @param string|array|\WebDriver\Element $element
-     * @return bool|\Webdriver\Element
+     * @param string|array|Element $element
+     * @return bool|Element
      */
     public function getFirstSelectedOption($element)
     {
         $element = $this->getElement($element);
-        $options = $element->elements(\WebDriver\LocatorStrategy::XPATH, './/option');
+        $options = $element->elements(LocatorStrategy::XPATH, './/option');
         foreach ($options as $option) {
-            /* @var $option \Webdriver\Element */
+            /* @var $option Element */
             if ($option->selected()) {
                 return $option;
             }
@@ -407,6 +411,4 @@ class Common extends AbstractComponent
             }
         }
     }
-
 }
-

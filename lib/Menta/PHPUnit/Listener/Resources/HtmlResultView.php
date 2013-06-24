@@ -45,14 +45,14 @@ class HtmlResultView extends View
 
         $result .= '<div class="content">';
 
-        if ($test['exception'] instanceof Exception) {
+        if ($test['exception'] instanceof \Exception) {
             $e = $test['exception'];
             /* @var $e Exception */
             $result .= '<div class="exception">';
             $result .= '<i>' . nl2br(
-                    $this->escape(PHPUnit_Util_Filter::getFilteredStacktrace($e))
+                    $this->escape(\PHPUnit_Util_Filter::getFilteredStacktrace($e))
                 ) . '</i>' . "<br />\n";
-            $result .= '<pre>' . $this->escape(PHPUnit_Framework_TestFailure::exceptionToString($e)) . '</pre>';
+            $result .= '<pre>' . $this->escape(\PHPUnit_Framework_TestFailure::exceptionToString($e)) . '</pre>';
             $result .= '</div><!-- exception -->';
         }
 
@@ -284,7 +284,7 @@ class HtmlResultView extends View
             } elseif ($key == '__tests') {
                 $result .= $this->printTests($value);
             } else {
-                throw new Exception("Unexpected key $key");
+                throw new \Exception("Unexpected key $key");
             }
         }
         return $result;
@@ -310,13 +310,12 @@ class HtmlResultView extends View
     public function getStatusName($status)
     {
         $names = array(
-            PHPUnit_Runner_BaseTestRunner::STATUS_PASSED => 'passed',
-            PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => 'skipped',
-            PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => 'incomplete',
-            PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => 'failed',
-            PHPUnit_Runner_BaseTestRunner::STATUS_ERROR => 'error',
+            \PHPUnit_Runner_BaseTestRunner::STATUS_PASSED => 'passed',
+            \PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED => 'skipped',
+            \PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE => 'incomplete',
+            \PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE => 'failed',
+            \PHPUnit_Runner_BaseTestRunner::STATUS_ERROR => 'error',
         );
         return $names[$status];
     }
-
 }

@@ -15,7 +15,8 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "instaclick/php-webdriver": "dev-master"
+        "instaclick/php-webdriver": "dev-master",
+        "phpunit/phpunit": "*@stable"
     },
     "autoload": {
         "psr-0": {

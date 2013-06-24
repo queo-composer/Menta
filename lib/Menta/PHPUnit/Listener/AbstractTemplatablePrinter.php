@@ -4,14 +4,12 @@ namespace Menta\PHPUnit\Listener;
 
 use Menta\Util\View;
 
-require_once 'PHPUnit/Framework/TestListener.php';
-
 /**
  * Templatable printer
  *
  * @author Fabrizio Branca
  */
-abstract class AbstractTemplatablePrinter extends PHPUnit_Util_Printer
+abstract class AbstractTemplatablePrinter extends \PHPUnit_Util_Printer
 {
 
     /**
@@ -73,7 +71,7 @@ abstract class AbstractTemplatablePrinter extends PHPUnit_Util_Printer
         }
         $dir = dirname($this->targetFile);
         if (!is_dir($dir)) {
-            throw new Exception("Target dir '$dir' does not exist");
+            throw new \Exception("Target dir '$dir' does not exist");
         }
         // clean target dir
         foreach (glob($dir . "/*") as $file) {
@@ -84,7 +82,7 @@ abstract class AbstractTemplatablePrinter extends PHPUnit_Util_Printer
         }
         $this->templateFile = str_replace('###MENTA_ROOTDIR###', MENTA_ROOTDIR, $this->templateFile);
         if (empty($this->templateFile)) {
-            throw new Exception('No template file defined');
+            throw new \Exception('No template file defined');
         }
         if (!is_null($additionalFiles)) {
             $this->additionalFiles = $additionalFiles;
@@ -110,7 +108,7 @@ abstract class AbstractTemplatablePrinter extends PHPUnit_Util_Printer
         $view = new $className($this->templateFile);
         /** @var $view View */
         if (!$view instanceof View) {
-            throw new Exception('View must inherit from View.');
+            throw new \Exception('View must inherit from View.');
         }
         foreach ($templateVars as $key => $value) {
             $view->assign($key, $value);
@@ -146,10 +144,8 @@ abstract class AbstractTemplatablePrinter extends PHPUnit_Util_Printer
 
             $res = copy($source, $targetPath);
             if ($res === false) {
-                throw new Exception("Error while copying file $source to $target");
+                throw new \Exception("Error while copying file $source to $target");
             }
         }
     }
-
 }
-

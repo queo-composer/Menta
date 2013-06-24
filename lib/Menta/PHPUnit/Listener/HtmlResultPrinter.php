@@ -10,7 +10,7 @@ use Menta\ScreenshotInterface;
  * @author Fabrizio Branca
  * @since 2011-11-13
  */
-class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Framework_TestListener
+class HtmlResultPrinter extends AbstractTemplatablePrinter implements \PHPUnit_Framework_TestListener
 {
 
     /**
@@ -37,37 +37,37 @@ class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Fr
 
     protected $viewClass = 'HtmlResultView';
 
-    public function startTest(PHPUnit_Framework_Test $test)
+    public function startTest(\PHPUnit_Framework_Test $test)
     {
     }
 
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addError(\PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         $this->lastResult = $e;
-        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_ERROR;
+        $this->lastStatus = \PHPUnit_Runner_BaseTestRunner::STATUS_ERROR;
     }
 
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    public function addFailure(\PHPUnit_Framework_Test $test, \PHPUnit_Framework_AssertionFailedError $e, $time)
     {
         $this->lastResult = $e;
-        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE;
+        $this->lastStatus = \PHPUnit_Runner_BaseTestRunner::STATUS_FAILURE;
     }
 
-    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addIncompleteTest(\PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         $this->lastResult = $e;
-        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE;
+        $this->lastStatus = \PHPUnit_Runner_BaseTestRunner::STATUS_INCOMPLETE;
     }
 
-    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addSkippedTest(\PHPUnit_Framework_Test $test, Exception $e, $time)
     {
         $this->lastResult = $e;
-        $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED;
+        $this->lastStatus = \PHPUnit_Runner_BaseTestRunner::STATUS_SKIPPED;
     }
 
-    public function getDocComment(PHPUnit_Framework_Test $test)
+    public function getDocComment(\PHPUnit_Framework_Test $test)
     {
-        $class = new ReflectionClass($test);
+        $class = new \ReflectionClass($test);
         $method = $class->getMethod($test->getName(false));
         $docComment = $method->getDocComment();
         $docComment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#', '$1', $docComment);
@@ -80,10 +80,10 @@ class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Fr
         return $docComment;
     }
 
-    public function endTest(PHPUnit_Framework_Test $test, $time)
+    public function endTest(\PHPUnit_Framework_Test $test, $time)
     {
 
-        $testName = PHPUnit_Util_Test::describe($test);
+        $testName = \PHPUnit_Util_Test::describe($test);
 
         // store in result array
         $currentArray =& $this->results;
@@ -100,7 +100,7 @@ class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Fr
         }
 
         if (is_null($this->lastStatus)) {
-            $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_PASSED;
+            $this->lastStatus = \PHPUnit_Runner_BaseTestRunner::STATUS_PASSED;
         }
 
         $result = array(
@@ -143,7 +143,7 @@ class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Fr
         $this->lastStatus = null;
     }
 
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
         $this->level++;
         $name = PHPUnit_Util_Test::describe($suite);
@@ -154,7 +154,7 @@ class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Fr
         $this->suiteStack[] = $name;
     }
 
-    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    public function endTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
         $this->level--;
         array_pop($this->suiteStack);
@@ -184,6 +184,4 @@ class HtmlResultPrinter extends AbstractTemplatablePrinter implements PHPUnit_Fr
 
         return parent::flush($templateVars);
     }
-
 }
-

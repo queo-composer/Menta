@@ -512,6 +512,4 @@ class Selenium1Facade extends AbstractComponentTest
     {
         return $this->getElement($element)->enabled();
     }
-
-
 }
