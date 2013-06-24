@@ -66,14 +66,14 @@ class Screenshot
     public function writeToDisk($filename)
     {
         if (empty($this->base64Image)) {
-            throw new Exception('No base64Image available');
+            throw new \Exception('No base64Image available');
         }
         if (empty($filename)) {
-            throw new Exception('No filename set');
+            throw new \Exception('No filename set');
         }
         $res = file_put_contents($filename, base64_decode($this->base64Image));
         if ($res === false) {
-            throw new Exception("File '$filename' could not be written");
+            throw new \Exception("File '$filename' could not be written");
         }
     }
 

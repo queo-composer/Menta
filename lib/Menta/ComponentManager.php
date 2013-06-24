@@ -75,7 +75,7 @@ class ComponentManager
             }
             self::$components[$component][$instanceKey] = new $component();
             if (!self::$components[$component][$instanceKey] instanceof ComponentInterface) {
-                throw new \Exception("Component '$component' does not implement interface 'Menta_Interfaces_Component'");
+                throw new \Exception("Component '$component' does not implement interface 'Menta\\ComponentInterface'");
             }
 
             if ($originalComponentClass != $component && !self::$components[$component][$instanceKey] instanceof $originalComponentClass) {

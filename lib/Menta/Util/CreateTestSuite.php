@@ -115,7 +115,7 @@ class CreateTestSuite
         $testSuite = self::createSuiteFromPath($testPath);
 
         if ($testSuite === false) {
-            throw new Exception('No testcases were found. Testcase files must end with "TestCase.php" or with "Test.php"');
+            throw new \Exception('No testcases were found. Testcase files must end with "TestCase.php" or with "Test.php"');
         }
 
         echo "\n";

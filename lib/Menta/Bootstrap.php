@@ -2,8 +2,10 @@
 
 namespace Menta;
 
+use Menta\Component\AbstractComponent;
+
 if (version_compare(PHP_VERSION, '5.3.0') <= 0) {
-    throw new Exception('Menta needs at least PHP 5.3');
+    throw new \Exception('Menta needs at least PHP 5.3');
 }
 
 
@@ -24,7 +26,7 @@ class Bootstrap
         // Provide configuration object to all components
         Events::addObserver(
             'before_component_get',
-            function (Menta_Component_Abstract $component) {
+            function (AbstractComponent $component) {
 
                 // set configuration to each component
                 $component->setConfiguration(ConfigurationPhpUnitVars::getInstance());
@@ -32,7 +34,7 @@ class Bootstrap
                 // pass current test to components inheriting from AbstractComponentTest
                 if ($component instanceof _AbstractComponentTest
                     && isset($GLOBALS['current_testcase'])
-                    && $GLOBALS['current_testcase'] instanceof PHPUnit_Framework_TestCase
+                    && $GLOBALS['current_testcase'] instanceof \PHPUnit_Framework_TestCase
                 ) {
                     /* @var $component _AbstractComponentTest */
                     $component->setTest($GLOBALS['current_testcase']);

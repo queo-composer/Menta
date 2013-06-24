@@ -26,7 +26,7 @@ class View
     public function __construct($templateFile)
     {
         if (!is_file($templateFile)) {
-            throw new Exception("Could not find template file $templateFile");
+            throw new \Exception("Could not find template file $templateFile");
         }
         $this->templateFile = $templateFile;
     }

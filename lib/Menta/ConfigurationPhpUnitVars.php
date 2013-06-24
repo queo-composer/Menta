@@ -96,7 +96,7 @@ class ConfigurationPhpUnitVars implements ConfigurationInterface
             if (file_exists($xmlfile)) {
                 $xml = simplexml_load_file($xmlfile);
                 foreach ($xml->xpath('//phpunit/php/var') as $node) {
-                    /* @var $node SimpleXMLElement */
+                    /** @var $node SimpleXMLElement */
                     $key = (string)$node['name'];
                     if (!isset($GLOBALS[$key])) { // only set the default value if no other value is set
                         $GLOBALS[$key] = (string)$node['value'];

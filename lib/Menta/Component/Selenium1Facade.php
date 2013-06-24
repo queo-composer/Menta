@@ -249,7 +249,7 @@ class Selenium1Facade extends AbstractComponentTest
     {
         if (empty($this->browserUrl)) {
             // $this->browserUrl = ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
-            throw new Exception('browserUrl has not been set.');
+            throw new \Exception('browserUrl has not been set.');
         }
         return $this->browserUrl;
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Menta;
+
 /**
  * Configuration interface
  *
@@ -31,5 +32,4 @@ interface ConfigurationInterface
      * @return bool
      */
     public function issetKey($key);
-
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Menta\Util;
+
 /**
  * Simple Image
  *
@@ -38,7 +39,7 @@ class SimpleImage
     public function __construct($filename)
     {
         if (!is_file($filename)) {
-            throw new InvalidArgumentException("File '$filename' not found");
+            throw new \InvalidArgumentException("File '$filename' not found");
         }
         $image_info = getimagesize($filename);
         $this->image_type = $image_info[2];
@@ -53,10 +54,10 @@ class SimpleImage
                 $this->image = imagecreatefrompng($filename);
                 break;
             default:
-                throw new Exception("Image type '{$this->image_type}' is invalid");
+                throw new \Exception("Image type '{$this->image_type}' is invalid");
         }
         if ($this->image === false) {
-            throw new Exception("Error while creating image from '$filename'");
+            throw new \Exception("Error while creating image from '$filename'");
         }
     }
 
@@ -83,10 +84,10 @@ class SimpleImage
                 $res = imagepng($this->image, $filename);
                 break;
             default:
-                throw new Exception("Image type '$image_type' is invalid");
+                throw new \Exception("Image type '$image_type' is invalid");
         }
         if ($res === false) {
-            throw new Exception("Error while saving file '$filename' (type: '$image_type')");
+            throw new \Exception("Error while saving file '$filename' (type: '$image_type')");
         }
         if (!is_null($permissions)) {
             chmod($filename, $permissions);
@@ -113,10 +114,10 @@ class SimpleImage
                 $res = imagepng($this->image);
                 break;
             default:
-                throw new Exception("Image type '$image_type' is invalid");
+                throw new \Exception("Image type '$image_type' is invalid");
         }
         if ($res === false) {
-            throw new Exception("Error while outputting raw image (type: '$image_type')");
+            throw new \Exception("Error while outputting raw image (type: '$image_type')");
         }
         return $this;
     }
@@ -196,7 +197,7 @@ class SimpleImage
         $width = intval($width);
         $height = intval($height);
         if (empty($width) || empty($height)) {
-            throw new InvalidArgumentException('Invalid dimensions');
+            throw new \InvalidArgumentException('Invalid dimensions');
         }
         $new_image = imagecreatetruecolor($width, $height);
         imagecopyresampled(
@@ -214,5 +215,4 @@ class SimpleImage
         $this->image = $new_image;
         return $this;
     }
-
 }

@@ -67,7 +67,7 @@ class SessionManager
     {
         if (is_null(self::$webdriver)) {
             if (empty(self::$serverUrl)) {
-                throw new Exception('No serverUrl set. Call SessionManager::init() to configure first');
+                throw new \Exception('No serverUrl set. Call SessionManager::init() to configure first');
             }
             self::$webdriver = new WebDriver(self::$serverUrl);
         }
