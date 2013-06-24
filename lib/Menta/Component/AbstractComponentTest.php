@@ -2,6 +2,8 @@
 
 namespace Menta\Component;
 
+use Menta\PHPUnit\Testcase\Selenium2Testcase;
+
 /**
  * Abstract component class for components that need access to the current PHPUnit testcase
  *
@@ -31,7 +33,7 @@ abstract class AbstractComponentTest extends AbstractComponent
     /**
      * Get test object
      *
-     * @return Menta_PHPUnit_Testcase_Selenium2
+     * @return Selenium2Testcase
      * @throws Exception if testcase is not available
      */
     public function getTest()

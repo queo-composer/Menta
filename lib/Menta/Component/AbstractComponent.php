@@ -2,6 +2,9 @@
 
 namespace Menta\Component;
 
+use Menta\Component\Helper\Assert;
+use Menta\Component\Helper\Common;
+use Menta\Component\Helper\Wait;
 use Menta\ComponentInterface;
 use Menta\ComponentManager;
 use Menta\ConfigurationInterface;
@@ -17,7 +20,7 @@ abstract class AbstractComponent implements ComponentInterface
 {
 
     /**
-     * @var Menta_Interface_Configuration
+     * @var ConfigurationInterface
      */
     protected $configuration;
 
@@ -83,7 +86,7 @@ abstract class AbstractComponent implements ComponentInterface
     /**
      * Set configuration
      *
-     * @param Menta_Interface_Configuration $configuration
+     * @param ConfigurationInterface $configuration
      * @return AbstractComponent
      */
     public function setConfiguration(ConfigurationInterface $configuration)
@@ -95,7 +98,7 @@ abstract class AbstractComponent implements ComponentInterface
     /**
      * Get configuration
      *
-     * @return Menta_Interface_Configuration
+     * @return ConfigurationInterface
      */
     public function getConfiguration()
     {
@@ -110,17 +113,17 @@ abstract class AbstractComponent implements ComponentInterface
     /**
      * Get common helper
      *
-     * @return Menta_Component_Helper_Common
+     * @return Common
      */
     public function getHelperCommon()
     {
-        return Menta_ComponentManager::get('Common');
+        return ComponentManager::get('Common');
     }
 
     /**
      * Get assert helper
      *
-     * @return Menta_Component_Helper_Assert
+     * @return Assert
      */
     public function getHelperAssert()
     {
@@ -130,7 +133,7 @@ abstract class AbstractComponent implements ComponentInterface
     /**
      * Get wait helper
      *
-     * @return Menta_Component_Helper_Wait
+     * @return Wait
      */
     protected function getHelperWait()
     {

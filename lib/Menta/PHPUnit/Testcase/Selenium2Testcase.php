@@ -4,6 +4,7 @@ namespace Menta\PHPUnit\Testcase;
 
 use Menta\ComponentManager;
 use Menta\ConfigurationInterface;
+use Menta\ConfigurationPhpUnitVars;
 use Menta\ScreenshotInterface;
 use Menta\SessionManager;
 use Menta\Util\Screenshot;
@@ -85,7 +86,7 @@ abstract class Selenium2Testcase extends \PHPUnit_Framework_TestCase implements 
     public function getConfiguration()
     {
         if (is_null($this->configuration)) {
-            $this->configuration = Menta_ConfigurationPhpUnitVars::getInstance();
+            $this->configuration = ConfigurationPhpUnitVars::getInstance();
         }
         return $this->configuration;
     }
@@ -97,10 +98,10 @@ abstract class Selenium2Testcase extends \PHPUnit_Framework_TestCase implements 
      */
     public function setUp()
     {
-        if (Menta_SessionManager::activeSessionExists()) {
+        if (SessionManager::activeSessionExists()) {
             if ($this->freshSessionForEachTestMethod) {
                 // Closes previous session if exists. A new session will be started on first call of SessionManager::getSession() or $this->getSession();
-                Menta_SessionManager::closeSession();
+                SessionManager::closeSession();
             } elseif ($this->cleanupPreviousSession) {
                 // Deleting all cookies to cleanup any previous application session state
                 SessionManager::getSession()->deleteAllCookies();

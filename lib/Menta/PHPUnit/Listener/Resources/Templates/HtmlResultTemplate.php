@@ -1,4 +1,4 @@
-<?php /* @var $this Menta_PHPUnit_Listener_Resources_HtmlResultView */ ?>
+<?php /* @var $this \Menta\PHPUnit\Listener\Resources\HtmlResultView */ ?>
 <html>
 <head>
     <title>PHPUnit HTML test report</title>

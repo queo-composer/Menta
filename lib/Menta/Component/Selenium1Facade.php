@@ -5,7 +5,7 @@ namespace Menta\Component;
 /**
  * Facade for methods that were available in PHPUnit_Extensions_SeleniumTestCase.
  * This component is intendet to be used from the magic __call() method of the
- * Menta_Testcase_Selenium1, which aims to be a drop-in-replacement for
+ * Selenium1Testcase, which aims to be a drop-in-replacement for
  * PHPUnit_Extensions_SeleniumTestCase.
  *
  * This also can be used by developers that are familiar with the Selenium 1 api implemented
