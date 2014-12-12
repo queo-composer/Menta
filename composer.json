@@ -1,5 +1,5 @@
 {
-    "name": "0x46616c6b/menta",
+    "name": "queo-composer/menta",
     "type": "library",
     "description": "Selenium 2 Testing Framework (for PHPUnit)",
     "keywords": ["selenium", "webdriver", "phpunit", "browser"],
